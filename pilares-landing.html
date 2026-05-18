@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Los Tres Pilares del Analista de Datos — Erick Emmanuel Dorado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy:   #0E1F3D;
+    --blue:   #1B4FBF;
+    --accent: #C8F135;
+    --gold:   #F0C040;
+    --white:  #F7F8FA;
+    --gray:   #8A94A6;
+    --border: #D0D8E8;
+    --card:   #FFFFFF;
+    --bg:     #F4F6FB;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ─────────────────────────────── */
+  .hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(27,79,191,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(200,241,53,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,241,53,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,241,53,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+    display: block;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 5vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2vw, 26px);
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 36px;
+    margin-top: 12px;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.7);
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .hero-desc strong {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 18px 36px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: fit-content;
+  }
+
+  .btn-primary:hover {
+    background: #d4ff3d;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(200,241,53,0.3);
+  }
+
+  .btn-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    background: rgba(200,241,53,0.15);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .hero-guarantee {
+    margin-top: 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 80px 80px 80px 40px;
+  }
+
+  .book-mockup {
+    width: 280px;
+    background: #FFFFFF;
+    box-shadow:
+      -8px 8px 0px rgba(27,79,191,0.3),
+      -16px 16px 0px rgba(27,79,191,0.15),
+      0 40px 80px rgba(0,0,0,0.4);
+    position: relative;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50% { transform: translateY(-12px) rotate(-1deg); }
+  }
+
+  .book-cover {
+    background: linear-gradient(145deg, #0E1F3D 0%, #1B3A6B 100%);
+    padding: 40px 32px;
+    border-left: 6px solid var(--accent);
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .book-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .book-cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .book-cover-title span {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .book-cover-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  .book-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .book-pilar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .book-pilar-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .book-author {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 16px;
+  }
+
+  /* ── NAV ──────────────────────────────── */
+  .topnav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 80px;
+    background: rgba(14,31,61,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .nav-cta:hover { background: #d4ff3d; }
+
+  /* ── PILARES ──────────────────────────── */
+  .section {
+    padding: 100px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--blue);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--navy);
+    margin-bottom: 60px;
+  }
+
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .pilar-card {
+    background: var(--card);
+    padding: 48px 40px;
+    border-top: 3px solid transparent;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pilar-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 0;
+    background: var(--navy);
+    transition: height 0.3s;
+    z-index: 0;
+  }
+
+  .pilar-card:hover::after { height: 4px; }
+
+  .pilar-card:nth-child(1) { border-top-color: var(--accent); }
+  .pilar-card:nth-child(2) { border-top-color: var(--blue); }
+  .pilar-card:nth-child(3) { border-top-color: var(--gold); }
+
+  .pilar-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gray);
+    margin-bottom: 20px;
+  }
+
+  .pilar-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .pilar-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .pilar-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--gray);
+  }
+
+  .pilar-topics {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pilar-topic {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--navy);
+  }
+
+  .pilar-topic::before {
+    content: '→';
+    color: var(--blue);
+    font-size: 12px;
+  }
+
+  /* ── HISTORIA ─────────────────────────── */
+  .historia-section {
+    background: var(--navy);
+    padding: 100px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .historia-section::before {
+    content: '"';
+    position: absolute;
+    top: -40px;
+    left: 60px;
+    font-family: 'Playfair Display', serif;
+    font-size: 400px;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .historia-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .historia-left .section-label { color: var(--accent); }
+  .historia-left .section-label::before { background: var(--accent); }
+
+  .historia-left .section-title {
+    color: #fff;
+    margin-bottom: 32px;
+  }
+
+  .historia-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 20px;
+  }
+
+  .historia-text strong {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .historia-text em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .historia-right {
+    padding-top: 80px;
+  }
+
+  .contrast-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 40px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .contrast-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 12px;
+  }
+
+  .contrast-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .contrast-price.red { color: #FF6B6B; text-decoration: line-through; opacity: 0.6; }
+  .contrast-price.green { color: var(--accent); }
+
+  .contrast-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+  }
+
+  .contrast-arrow {
+    text-align: center;
+    font-size: 28px;
+    color: rgba(255,255,255,0.2);
+    margin: 8px 0;
+  }
+
+  /* ── CONTENIDO BLOQUEADO ──────────────── */
+  .contenido-section {
+    padding: 100px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .lock-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .lock-item {
+    background: var(--card);
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    filter: blur(0px);
+    transition: all 0.3s;
+  }
+
+  .lock-item:hover { background: #F0F4FF; }
+
+  .lock-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .lock-text {
+    flex: 1;
+  }
+
+  .lock-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 4px;
+    filter: blur(4px);
+    user-select: none;
+  }
+
+  .lock-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray);
+    filter: blur(3px);
+    user-select: none;
+  }
+
+  .lock-badge {
+    background: var(--navy);
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .lock-count {
+    text-align: center;
+    margin-top: 32px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--gray);
+  }
+
+  .lock-count strong {
+    color: var(--navy);
+    font-size: 20px;
+  }
+
+  /* ── CTA COMPRA ───────────────────────── */
+  .cta-section {
+    background: var(--navy);
+    padding: 100px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(27,79,191,0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .cta-anchor {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+    text-decoration: line-through;
+  }
+
+  .cta-anchor strong { color: rgba(255,255,255,0.5); }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+
+  .cta-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cta-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 52px;
+    line-height: 1.6;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent);
+    color: var(--navy);
+    padding: 24px 56px;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .cta-btn:hover {
+    background: #d4ff3d;
+    transform: translateY(-3px);
+    box-shadow: 0 20px 60px rgba(200,241,53,0.35);
+  }
+
+  .cta-btn-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cta-btn-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    background: rgba(14,31,61,0.12);
+    padding: 4px 12px;
+  }
+
+  .cta-btn-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(14,31,61,0.6);
+    letter-spacing: 1px;
+  }
+
+  .cta-guarantee {
+    margin-top: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .cta-motivator {
+    margin-top: 48px;
+    padding: 32px 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+    text-align: left;
+    position: relative;
+  }
+
+  .cta-motivator::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 32px;
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .cta-motivator-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+  }
+
+  /* ── PROXIMAMENTE ─────────────────────── */
+  .prox-section {
+    padding: 80px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .prox-card {
+    background: var(--card);
+    border: 2px dashed var(--border);
+    padding: 56px 60px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .prox-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFF8E0;
+    color: #92600A;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .prox-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .prox-desc {
+    font-size: 15px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  .prox-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--border);
+    white-space: nowrap;
+  }
+
+  /* ── FOOTER ───────────────────────────── */
+  .footer {
+    background: var(--navy);
+    padding: 40px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .footer-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .footer-link:hover { opacity: 0.7; }
+
+  /* ── ANIMATIONS ───────────────────────── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+  .delay-5 { animation-delay: 0.7s; }
+
+  /* ── RESPONSIVE ───────────────────────── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 120px 32px 60px; }
+    .hero-right { display: none; }
+    .topnav { padding: 16px 32px; }
+    .section, .contenido-section, .prox-section { padding: 60px 32px; }
+    .historia-section { padding: 60px 32px; }
+    .historia-inner { grid-template-columns: 1fr; gap: 48px; }
+    .historia-right { padding-top: 0; }
+    .pilares-grid { grid-template-columns: 1fr; }
+    .lock-grid { grid-template-columns: 1fr; }
+    .cta-section { padding: 80px 32px; }
+    .prox-card { grid-template-columns: 1fr; }
+    .prox-price { display: none; }
+    .footer { padding: 32px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a class="nav-logo" href="https://erickemmanueldorado.vercel.app">← Erick Dorado</a>
+  <a class="nav-cta" href="#comprar">Obtener el libro · <strong>$9.99</strong></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow fade-up delay-1">Ebook · Data Analytics</div>
+    <h1 class="hero-title fade-up delay-2">
+      Los Tres<br /><em>Pilares</em><br />del Analista
+    </h1>
+    <p class="hero-subtitle fade-up delay-2">Lo que nadie te enseña en un curso de datos.</p>
+    <p class="hero-desc fade-up delay-3">
+      <strong>Mentalidad. Soft Skills. Negocio.</strong><br />
+      La guía que yo hubiera querido leer cuando empecé.
+      No es teoría. Es experiencia vivida y mapeada
+      para que te sirva a vos.
+    </p>
+    <a class="btn-primary fade-up delay-4" href="#comprar">
+      Obtener el libro
+      <span class="btn-price">$9.99</span>
+    </a>
+    <p class="hero-guarantee fade-up delay-5">✓ Garantía de devolución · Descarga inmediata</p>
+  </div>
+
+  <div class="hero-right">
+    <div class="book-mockup fade-up delay-3">
+      <div class="book-cover">
+        <div>
+          <div class="book-tag">Ebook · Data Analytics</div>
+          <div class="book-cover-title">Los Tres <span>Pilares</span><br />del Analista<br />de Datos</div>
+          <div class="book-cover-sub">Lo que nadie te enseña en un curso</div>
+        </div>
+        <div class="book-pillars">
+          <div class="book-pilar"><div class="book-pilar-dot"></div>01 · Mentalidad</div>
+          <div class="book-pilar"><div class="book-pilar-dot"></div>02 · Soft Skills</div>
+          <div class="book-pilar"><div class="book-pilar-dot"></div>03 · Negocio</div>
+        </div>
+        <div class="book-author">Erick Emmanuel Dorado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section style="background: var(--bg); padding: 100px 0;">
+  <div class="section" style="padding-top:0; padding-bottom:0;">
+    <div class="section-label">Los tres pilares clave</div>
+    <h2 class="section-title">Lo que separa a un analista<br />de alguien que sabe herramientas</h2>
+    <div class="pilares-grid">
+      <div class="pilar-card">
+        <div class="pilar-num">PILAR 01</div>
+        <span class="pilar-icon">🧠</span>
+        <div class="pilar-name">Mentalidad</div>
+        <p class="pilar-desc">Cómo preparar tu cabeza para el cambio, la frustración y el proceso de aprendizaje real.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">PILAR 02</div>
+        <span class="pilar-icon">🎯</span>
+        <div class="pilar-name">Soft Skills</div>
+        <p class="pilar-desc">Cómo comunicar resultados, estructurar análisis y manejar personas que no saben de datos.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">PILAR 03</div>
+        <span class="pilar-icon">💼</span>
+        <div class="pilar-name">Negocio</div>
+        <p class="pilar-desc">Cómo pensar como un analista que entiende el negocio, no solo ejecuta queries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIA -->
+<section class="historia-section">
+  <div class="historia-inner">
+    <div class="historia-left">
+      <div class="section-label">Mi historia</div>
+      <h2 class="section-title">Por qué existe este libro</h2>
+      <p class="historia-text">
+        Pasé meses aprendiendo herramientas. SQL. Python. Power BI. Siempre aparecía una más.
+        Y cada vez que terminaba un curso sentía que no había aprendido nada real porque
+        <strong>nunca había resuelto un problema real.</strong>
+      </p>
+      <p class="historia-text">
+        Cuando finalmente enfrentaba un problema de negocio no sabía qué KPI usar.
+        No sabía cómo estructurar una respuesta profesional. No sabía cómo comunicar
+        un resultado a alguien que no sabe de datos.
+        <strong>Estuve a punto de dejarlo todo.</strong>
+      </p>
+      <p class="historia-text">
+        Busqué un programa que me enseñara todo esto. Lo encontré.
+        <em>Costaba $800 dólares.</em> No tenía forma de pagarlo.
+      </p>
+      <p class="historia-text">
+        Entonces decidí construir mi propio mapa. Investigué cómo aprendieron otros,
+        pregunté a profesionales del rubro, apliqué todo en proyectos reales.
+        Este libro es ese mapa. <strong>Por $9.99.</strong>
+      </p>
+    </div>
+    <div class="historia-right">
+      <div class="contrast-card">
+        <div class="contrast-label">El programa que yo quería</div>
+        <div class="contrast-price red">$800</div>
+        <div class="contrast-desc">USD · Sin acceso · Sin posibilidad</div>
+      </div>
+      <div class="contrast-arrow">↓</div>
+      <div class="contrast-card">
+        <div class="contrast-label">Este libro</div>
+        <div class="contrast-price green">$9.99</div>
+        <div class="contrast-desc">USD · Descarga inmediata · El mismo conocimiento, destilado desde la experiencia real.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENIDO BLOQUEADO -->
+<section style="background: var(--bg);">
+  <div class="contenido-section">
+    <div class="section-label">Contenido del libro</div>
+    <h2 class="section-title">9 capítulos · 3 pilares · ejercicios incluidos</h2>
+
+    <div class="lock-grid">
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 1.1 — Mentalidad de crecimiento aplicada a datos</div>
+          <div class="lock-sub">Pilar 01 · Mentalidad</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 1.2 — El framework de las 5 preguntas</div>
+          <div class="lock-sub">Pilar 01 · Mentalidad analítica</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 1.3 — Cómo manejar la frustración en el proceso</div>
+          <div class="lock-sub">Pilar 01 · Mentalidad</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 2.1 — Storytelling de datos: estructura narrativa</div>
+          <div class="lock-sub">Pilar 02 · Soft Skills</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 2.2 — Comunicar con claridad a no técnicos</div>
+          <div class="lock-sub">Pilar 02 · Soft Skills</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 2.3 — Manejo de stakeholders: los 3 perfiles</div>
+          <div class="lock-sub">Pilar 02 · Soft Skills</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 3.1 — Mapa KPI → Pregunta → Decisión</div>
+          <div class="lock-sub">Pilar 03 · Negocio</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 3.2 — El ciclo del analista orientado al negocio</div>
+          <div class="lock-sub">Pilar 03 · Negocio</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+      <div class="lock-item">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-text">
+          <div class="lock-title">Capítulo 3.3 — Tu ventaja competitiva: el contexto de negocio</div>
+          <div class="lock-sub">Pilar 03 · Negocio</div>
+        </div>
+        <div class="lock-badge">Bloqueado</div>
+      </div>
+    </div>
+
+    <p class="lock-count">
+      <strong>9</strong> capítulos · <strong>5</strong> ejercicios prácticos · <strong>3</strong> frameworks · todo desbloqueado con la compra
+    </p>
+  </div>
+</section>
+
+<!-- CTA COMPRA -->
+<section class="cta-section" id="comprar">
+  <div class="cta-inner">
+    <p class="cta-anchor">El programa que yo quería costaba <strong>$800 USD.</strong></p>
+    <h2 class="cta-title">Obtener el libro<br />por <em>$9.99</em></h2>
+    <p class="cta-sub">Descarga inmediata en formato PDF y DOCX.<br />Un solo pago. Sin suscripción.</p>
+
+    <a class="cta-btn" href="https://emmanueldorado.gumroad.com/l/guxcki" target="_blank">
+      <div class="cta-btn-label">
+        Obtener el libro
+        <span class="cta-btn-price">$9.99</span>
+      </div>
+      <div class="cta-btn-sub">Descarga inmediata · PDF + DOCX</div>
+    </a>
+
+    <p class="cta-guarantee">✓ Si no te aporta nada, te devuelvo el dinero.</p>
+
+    <div class="cta-motivator">
+      <p class="cta-motivator-text">
+        El conocimiento que te falta para pasar de saber herramientas
+        a pensar como un analista real no está en otro curso técnico.
+        Está en este libro.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROXIMAMENTE -->
+<section style="background: var(--bg);">
+  <div class="prox-section">
+    <div class="section-label">Versión extendida</div>
+    <div class="prox-card">
+      <div>
+        <div class="prox-badge">🔜 Próximamente</div>
+        <h3 class="prox-title">Los Tres Pilares — Edición Extendida</h3>
+        <p class="prox-desc">
+          Versión ampliada con casos prácticos resueltos, recursos descargables,
+          plantillas y el contenido actualizado con los proyectos 2 y 3 del portfolio.
+          Plataforma con acceso progresivo por días incluida.
+        </p>
+      </div>
+      <div class="prox-price">$29–49</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-copy">© 2026 Erick Emmanuel Dorado · Todos los derechos reservados</span>
+  <a class="footer-link" href="https://erickemmanueldorado.vercel.app">← Volver al portfolio</a>
+</footer>
+
+</body>
+</html>
