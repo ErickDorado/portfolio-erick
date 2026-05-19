@@ -1,6 +1,6 @@
  // ── NAVIGATION ──
- const sections = ['home','projects','about','contact','detail-1','detail-2','detail-3','lab'];
-const navIds = ['home','projects','about','contact','lab'];
+ const sections = ['home','projects','about','contact','detail-1','detail-2','detail-3','lab','certifications'];
+const navIds = ['home','projects','about','contact','lab','certifications'];
 
   function navigate(id) {
   sections.forEach(s => {

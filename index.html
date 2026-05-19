@@ -12,11 +12,15 @@
     <ul class="nav-links">
       <li><a href="#" onclick="navigate('home')" id="nav-home" class="active">Inicio</a></li>
       <li><a href="#" onclick="navigate('projects')" id="nav-projects">Proyectos</a></li>
-      <li><a href="#" onclick="navigate('about')" id="nav-about">Sobre mí</a></li>
-      <li><a href="#" onclick="navigate('contact')" id="nav-contact">Contacto</a></li>
       <li><a href="#" onclick="navigate('lab')" id="nav-lab">Laboratorio</a></li>
+      <li><a href="#" onclick="navigate('about')" id="nav-about">Sobre mí</a></li>
+      <li><a href="#" onclick="navigate('certifications')" id="nav-certifications">Certificaciones</a></li>
+      <li><a href="#" onclick="navigate('contact')" id="nav-contact">Contacto</a></li>
     </ul>
-    <a class="nav-cta" href="#" onclick="navigate('contact')">Hablemos →</a>
+    <div class="nav-ctas">
+      <a class="nav-cta-academy" href="academia.html" target="_blank">Academia →</a>
+      <a class="nav-cta" href="#" onclick="navigate('contact')">Hablemos →</a>
+    </div>
     <div class="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
@@ -24,9 +28,11 @@
   <div class="mobile-menu" id="mobile-menu">
     <a href="#" onclick="navigate('home');toggleMenu()">Inicio</a>
     <a href="#" onclick="navigate('projects');toggleMenu()">Proyectos</a>
-    <a href="#" onclick="navigate('about');toggleMenu()">Sobre mí</a>
-    <a href="#" onclick="navigate('contact');toggleMenu()">Contacto</a>
     <a href="#" onclick="navigate('lab');toggleMenu()">Laboratorio</a>
+    <a href="#" onclick="navigate('about');toggleMenu()">Sobre mí</a>
+    <a href="#" onclick="navigate('certifications');toggleMenu()">Certificaciones</a>
+    <a href="#" onclick="navigate('contact');toggleMenu()">Contacto</a>
+    <a href="academia.html" target="_blank" class="mobile-menu-academy">🎓 Academia →</a>
   </div>
 </nav>
 
@@ -792,6 +798,134 @@
   <button class="form-submit" onclick="handleSubmit()">Enviar mensaje →</button>
   <p id="form-status" style="font-size:13px;margin-top:12px;color:var(--text-3);display:none;"></p>
 </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ CERTIFICATIONS ══════════════ -->
+<section id="certifications">
+  <div class="container">
+    <div class="page-header fade-up fade-up-1">
+      <h1>Certificaciones</h1>
+      <p>Formación formal, credenciales verificables y capacitaciones en curso.
+         Aprendo con estructura, no solo por curiosidad.</p>
+    </div>
+
+    <div class="cert-grid">
+
+      <!-- Diplomatura -->
+      <div class="cert-card fade-up fade-up-2">
+        <div class="cert-icon">🎓</div>
+        <div class="cert-body">
+          <div class="cert-institution">U.P.S.O · Universidad Provincial del Sudoeste</div>
+          <div class="cert-name">Diplomatura en Operaciones Logísticas</div>
+          <div class="cert-tags">
+            <span class="cert-tag">Logística</span>
+            <span class="cert-tag">Operaciones</span>
+            <span class="cert-tag">Supply Chain</span>
+          </div>
+        </div>
+        <div class="cert-badge cert-badge-done">Completado</div>
+      </div>
+
+      <!-- Excel Santander -->
+      <div class="cert-card fade-up fade-up-2">
+        <div class="cert-icon">📊</div>
+        <div class="cert-body">
+          <div class="cert-institution">Santander Academy</div>
+          <div class="cert-name">Excel Intermedio</div>
+          <div class="cert-tags">
+            <span class="cert-tag">Excel</span>
+            <span class="cert-tag">Análisis de datos</span>
+          </div>
+        </div>
+        <div class="cert-badge cert-badge-done">Completado</div>
+      </div>
+
+      <!-- DS4B - Analista de datos -->
+      <div class="cert-card fade-up fade-up-3">
+        <div class="cert-icon">📈</div>
+        <div class="cert-body">
+          <div class="cert-institution">DS4B · Data Science for Business</div>
+          <div class="cert-name">Tu primera experiencia como Analista de Datos</div>
+          <div class="cert-tags">
+            <span class="cert-tag">Data Analytics</span>
+            <span class="cert-tag">Business</span>
+          </div>
+        </div>
+        <div class="cert-badge cert-badge-done">Completado</div>
+      </div>
+
+      <!-- DS4B - IA -->
+      <div class="cert-card fade-up fade-up-3">
+        <div class="cert-icon">🤖</div>
+        <div class="cert-body">
+          <div class="cert-institution">DS4B · Data Science for Business</div>
+          <div class="cert-name">Introducción al uso de IA en Proyectos de Data Science</div>
+          <div class="cert-tags">
+            <span class="cert-tag">Inteligencia Artificial</span>
+            <span class="cert-tag">Data Science</span>
+          </div>
+        </div>
+        <div class="cert-badge cert-badge-done">Completado</div>
+      </div>
+
+      <!-- Autoelevador -->
+      <div class="cert-card fade-up fade-up-3">
+        <div class="cert-icon">🏭</div>
+        <div class="cert-body">
+          <div class="cert-institution">Certificación Profesional</div>
+          <div class="cert-name">Operador de Autoelevador Profesional</div>
+          <div class="cert-tags">
+            <span class="cert-tag">Logística</span>
+            <span class="cert-tag">Operaciones</span>
+            <span class="cert-tag">Habilitación</span>
+          </div>
+        </div>
+        <div class="cert-badge cert-badge-done">Completado</div>
+      </div>
+
+    </div>
+
+    <!-- En curso -->
+    <div class="cert-section-label fade-up fade-up-3">En formación activa</div>
+    <div class="cert-grid">
+
+      <div class="cert-card cert-card-active fade-up fade-up-4">
+        <div class="cert-icon">🌐</div>
+        <div class="cert-body">
+          <div class="cert-institution">Cisco Networking Academy</div>
+          <div class="cert-name">Programas de certificación en tecnología y redes</div>
+          <div class="cert-tags">
+            <span class="cert-tag">Cisco</span>
+            <span class="cert-tag">Networking</span>
+            <span class="cert-tag">IA</span>
+          </div>
+        </div>
+        <div class="cert-badge cert-badge-active">En curso</div>
+      </div>
+
+      <div class="cert-card cert-card-active fade-up fade-up-4">
+        <div class="cert-icon">🏫</div>
+        <div class="cert-body">
+          <div class="cert-institution">CeNET · Centro de e-Learning</div>
+          <div class="cert-name">Formación docente para dictado de clases certificadas</div>
+          <div class="cert-tags">
+            <span class="cert-tag">Educación</span>
+            <span class="cert-tag">Docencia</span>
+            <span class="cert-tag">Certificación</span>
+          </div>
+        </div>
+        <div class="cert-badge cert-badge-active">En curso</div>
+      </div>
+
+    </div>
+
+    <div class="coming-soon-banner fade-up fade-up-4">
+      <h4>Formación continua como práctica</h4>
+      <p>Las certificaciones de Cisco y CeNET habilitan el dictado de clases en la Academia.
+         Aprendo, certifico y enseño en paralelo — cada credencial alimenta un curso nuevo.</p>
     </div>
 
   </div>
