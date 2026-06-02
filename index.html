@@ -1,940 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<link rel="stylesheet" href="css/styles.css" />
-<script src="js/main.js"></script>
-<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ARKOS — Erick Emmanuel Dorado. Systems Builder. Data · SaaS · AI · Design.">
+<title>ARKOS — Systems Builder</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- NOISE -->
+<div class="noise"></div>
+
 <!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a class="nav-logo" href="#" onclick="navigate('home')">Erick E. <span>Dorado</span></a>
-    <ul class="nav-links">
-      <li><a href="#" onclick="navigate('home')" id="nav-home" class="active">Inicio</a></li>
-      <li><a href="#" onclick="navigate('projects')" id="nav-projects">Proyectos</a></li>
-      <li><a href="#" onclick="navigate('lab')" id="nav-lab">Laboratorio</a></li>
-      <li><a href="#" onclick="navigate('about')" id="nav-about">Sobre mí</a></li>
-      <li><a href="#" onclick="navigate('certifications')" id="nav-certifications">Certificaciones</a></li>
-      <li><a href="#" onclick="navigate('contact')" id="nav-contact">Contacto</a></li>
-    </ul>
-    <div class="nav-ctas">
-      <a class="nav-cta-academy" href="academia.html" target="_blank">Academia →</a>
-      <a class="nav-cta" href="#" onclick="navigate('contact')">Hablemos →</a>
-    </div>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="#" onclick="navigate('home');toggleMenu()">Inicio</a>
-    <a href="#" onclick="navigate('projects');toggleMenu()">Proyectos</a>
-    <a href="#" onclick="navigate('lab');toggleMenu()">Laboratorio</a>
-    <a href="#" onclick="navigate('about');toggleMenu()">Sobre mí</a>
-    <a href="#" onclick="navigate('certifications');toggleMenu()">Certificaciones</a>
-    <a href="#" onclick="navigate('contact');toggleMenu()">Contacto</a>
-    <a href="academia.html" target="_blank" class="mobile-menu-academy">🎓 Academia →</a>
-  </div>
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <svg width="20" height="20" viewBox="0 0 120 120" fill="none">
+      <rect x="1" y="1" width="118" height="118" stroke="#7FFFD4" stroke-width="1.5"/>
+      <polygon points="60,18 97,82 23,82" stroke="#7FFFD4" stroke-width="2" fill="none"/>
+      <circle cx="60" cy="58" r="5" fill="#7FFFD4"/>
+    </svg>
+    ARKOS
+  </a>
+  <ul class="nav-links">
+    <li><a href="#work">Proyectos</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#lab">Lab</a></li>
+    <li><a href="#contact" class="nav-cta">Hablemos →</a></li>
+  </ul>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span>
+  </button>
 </nav>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#work" class="mm-link">Proyectos</a></li>
+    <li><a href="#about" class="mm-link">About</a></li>
+    <li><a href="#lab" class="mm-link">Lab</a></li>
+    <li><a href="#contact" class="mm-link">Contacto</a></li>
+  </ul>
+</div>
 
-<!-- ══════════════ HOME ══════════════ -->
-<section id="home" class="active">
-  <div class="container">
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
 
-    <div class="home-hero">
-      <div class="home-label fade-up fade-up-1">Disponible para oportunidades</div>
-      <h1 class="home-name fade-up fade-up-2">Erick Emmanuel<br>Dorado</h1>
-      <p class="home-title fade-up fade-up-3">Tecnólogo Empresarial · Analytics · Automatización · IA Aplicada</p>
-      <p class="home-desc fade-up fade-up-4">
-        Construyo proyectos en el cruce entre datos, sistemas y negocio.
-        Me interesa cómo la información bien estructurada puede mejorar decisiones reales —
-        desde logística hasta automatización de procesos operativos.
+  <div class="hero-content">
+    <div class="hero-label">
+      <span class="dot"></span>
+      Disponible para proyectos · Buenos Aires, AR
+    </div>
+
+    <h1 class="hero-name">
+      <span class="hero-name-line" style="animation-delay:0.1s">ERICK</span>
+      <span class="hero-name-line hero-name-accent" style="animation-delay:0.25s">DORADO</span>
+    </h1>
+
+    <div class="hero-arkos-badge">
+      <svg width="14" height="14" viewBox="0 0 120 120" fill="none">
+        <rect x="1" y="1" width="118" height="118" stroke="#7FFFD4" stroke-width="2"/>
+        <polygon points="60,18 97,82 23,82" stroke="#7FFFD4" stroke-width="2.5" fill="none"/>
+        <circle cx="60" cy="58" r="6" fill="#7FFFD4"/>
+      </svg>
+      ARKOS · Systems Builder
+    </div>
+
+    <p class="hero-desc">
+      Construyo sistemas en el cruce entre <em>datos, software y negocio.</em><br>
+      Logística · Analytics · SaaS · IA Aplicada · Diseño Web.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">Ver proyectos →</a>
+      <a href="#contact" class="btn-ghost">Contacto</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Proyectos activos</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">5K</div>
+      <div class="stat-label">Registros analizados</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Disciplinas cruzadas</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     STACK
+══════════════════════════════════════ -->
+<section class="stack-strip">
+  <div class="stack-track">
+    <span>SQL</span><span class="dot-sep">·</span>
+    <span>Python</span><span class="dot-sep">·</span>
+    <span>Power BI</span><span class="dot-sep">·</span>
+    <span>Excel</span><span class="dot-sep">·</span>
+    <span>DuckDB</span><span class="dot-sep">·</span>
+    <span>n8n</span><span class="dot-sep">·</span>
+    <span>Git</span><span class="dot-sep">·</span>
+    <span>Looker</span><span class="dot-sep">·</span>
+    <span>HTML/CSS/JS</span><span class="dot-sep">·</span>
+    <span>Pandas</span><span class="dot-sep">·</span>
+    <span>dbt</span><span class="dot-sep">·</span>
+    <span>IA Aplicada</span><span class="dot-sep">·</span>
+    <!-- repeat -->
+    <span>SQL</span><span class="dot-sep">·</span>
+    <span>Python</span><span class="dot-sep">·</span>
+    <span>Power BI</span><span class="dot-sep">·</span>
+    <span>Excel</span><span class="dot-sep">·</span>
+    <span>DuckDB</span><span class="dot-sep">·</span>
+    <span>n8n</span><span class="dot-sep">·</span>
+    <span>Git</span><span class="dot-sep">·</span>
+    <span>Looker</span><span class="dot-sep">·</span>
+    <span>HTML/CSS/JS</span><span class="dot-sep">·</span>
+    <span>Pandas</span><span class="dot-sep">·</span>
+    <span>dbt</span><span class="dot-sep">·</span>
+    <span>IA Aplicada</span><span class="dot-sep">·</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PROYECTOS
+══════════════════════════════════════ -->
+<section class="section" id="work">
+  <div class="section-header reveal">
+    <div class="section-tag">01 — Proyectos</div>
+    <h2 class="section-title">WORK</h2>
+  </div>
+
+  <div class="projects-list">
+
+    <!-- PROJECT 01 -->
+    <article class="project-row reveal" data-index="01">
+      <div class="project-row-meta">
+        <div class="project-index">01</div>
+        <div class="project-tags-col">
+          <span class="tag">Analytics</span>
+          <span class="tag">Logística</span>
+          <span class="tag tag-done">Completado</span>
+        </div>
+      </div>
+      <div class="project-row-content">
+        <div class="project-row-header">
+          <h3 class="project-name">Pipeline de Analytics Logístico</h3>
+          <div class="project-links">
+            <a href="https://github.com/ErickDorado/proyecto-pipeline-logistico" target="_blank" class="project-link">GitHub →</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Pipeline end-to-end de análisis logístico: datos sintéticos, ETL con Python, análisis SQL con DuckDB y dashboard ejecutivo en Power BI. OTD global 61.3% — identificación de carriers y zonas críticas con recomendaciones ejecutivas concretas.
+        </p>
+        <div class="project-stack">
+          <span>Python</span><span>SQL · DuckDB</span><span>Power BI · DAX</span><span>ETL</span><span>Excel</span>
+        </div>
+        <div class="project-metrics">
+          <div class="metric"><span class="metric-val">5.000</span><span class="metric-label">pedidos analizados</span></div>
+          <div class="metric"><span class="metric-val">61.3%</span><span class="metric-label">OTD global medido</span></div>
+          <div class="metric"><span class="metric-val">+14pts</span><span class="metric-label">mejora proyectada</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 02 -->
+    <article class="project-row reveal" data-index="02">
+      <div class="project-row-meta">
+        <div class="project-index">02</div>
+        <div class="project-tags-col">
+          <span class="tag">SaaS</span>
+          <span class="tag">Salud</span>
+          <span class="tag tag-wip">En desarrollo</span>
+        </div>
+      </div>
+      <div class="project-row-content">
+        <div class="project-row-header">
+          <h3 class="project-name">DentalOS</h3>
+        </div>
+        <p class="project-desc">
+          Sistema operativo para clínicas dentales. Gestión de pacientes, agenda, facturación y métricas operativas en una sola plataforma SaaS. Construido sobre la necesidad real de digitalizar un sector que aún opera en papel.
+        </p>
+        <div class="project-stack">
+          <span>SaaS</span><span>Web App</span><span>IA Aplicada</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 03 -->
+    <article class="project-row reveal" data-index="03">
+      <div class="project-row-meta">
+        <div class="project-index">03</div>
+        <div class="project-tags-col">
+          <span class="tag">SaaS</span>
+          <span class="tag">PyMEs</span>
+          <span class="tag tag-wip">En desarrollo</span>
+        </div>
+      </div>
+      <div class="project-row-content">
+        <div class="project-row-header">
+          <h3 class="project-name">DebtOS — Gestor de Deudores</h3>
+        </div>
+        <p class="project-desc">
+          Herramienta SaaS para PyMEs que necesitan controlar su cartera de deudores. Seguimiento automatizado, notificaciones, historial de pagos y reportes — sin Excel, sin hojas volantes.
+        </p>
+        <div class="project-stack">
+          <span>SaaS</span><span>Automatización</span><span>Python</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 04 -->
+    <article class="project-row reveal" data-index="04">
+      <div class="project-row-meta">
+        <div class="project-index">04</div>
+        <div class="project-tags-col">
+          <span class="tag">Marketplace</span>
+          <span class="tag">Local</span>
+          <span class="tag tag-wip">Ideación</span>
+        </div>
+      </div>
+      <div class="project-row-content">
+        <div class="project-row-header">
+          <h3 class="project-name">MapOS — Marketplace Local</h3>
+        </div>
+        <p class="project-desc">
+          Plataforma que conecta negocios locales con su comunidad a través de un mapa interactivo. Descubrí lo que tenés cerca. Construido para ciudades medianas donde el comercio local no tiene visibilidad digital.
+        </p>
+        <div class="project-stack">
+          <span>Marketplace</span><span>Geolocalización</span><span>Web App</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJECT 05 -->
+    <article class="project-row reveal" data-index="05">
+      <div class="project-row-meta">
+        <div class="project-index">05</div>
+        <div class="project-tags-col">
+          <span class="tag">Producto digital</span>
+          <span class="tag">Educación</span>
+          <span class="tag tag-done">Publicado</span>
+        </div>
+      </div>
+      <div class="project-row-content">
+        <div class="project-row-header">
+          <h3 class="project-name">Los Tres Pilares del Analista de Datos</h3>
+          <div class="project-links">
+            <a href="https://erickemmanueldorado.vercel.app/pilares-landing.html" target="_blank" class="project-link">Ver libro →</a>
+          </div>
+        </div>
+        <p class="project-desc">
+          Lo que ningún curso de datos te enseña: mentalidad analítica, comunicación de resultados y pensamiento de negocio. 9 páginas. 3 pilares. 5 ejercicios prácticos. $9.99 USD.
+        </p>
+        <div class="project-stack">
+          <span>Ebook</span><span>Producto digital</span><span>$9.99 USD</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     ABOUT
+══════════════════════════════════════ -->
+<section class="section section-about" id="about">
+  <div class="about-grid">
+    <div class="about-left reveal">
+      <div class="section-tag">02 — About</div>
+      <h2 class="section-title">QUIEN<br>SOY</h2>
+      <div class="about-symbol">
+        <svg width="80" height="80" viewBox="0 0 120 120" fill="none">
+          <rect x="1" y="1" width="118" height="118" stroke="#7FFFD4" stroke-width="1"/>
+          <line x1="60" y1="8" x2="60" y2="112" stroke="#7FFFD4" stroke-width="0.4" opacity="0.2"/>
+          <line x1="8" y1="60" x2="112" y2="60" stroke="#7FFFD4" stroke-width="0.4" opacity="0.2"/>
+          <polygon points="60,18 97,82 23,82" stroke="#7FFFD4" stroke-width="1.5" fill="none"/>
+          <polygon points="60,40 80,75 40,75" fill="#7FFFD4" opacity="0.1"/>
+          <circle cx="60" cy="58" r="4" fill="#7FFFD4"/>
+          <circle cx="60" cy="18" r="2.5" fill="#7FFFD4"/>
+          <circle cx="97" cy="82" r="2.5" fill="#7FFFD4"/>
+          <circle cx="23" cy="82" r="2.5" fill="#7FFFD4"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="about-right reveal">
+      <p class="about-text">
+        Soy Erick, de Punta Alta, Buenos Aires. Estudié Logística y de ahí no paré — hoy construyo SaaS, analizo datos, diseño webs, escribo libros y aprendo IA en paralelo.
       </p>
-      <div class="home-actions fade-up fade-up-4">
-        <a class="btn-primary" onclick="navigate('projects')">Ver proyectos →</a>
-        <a class="btn-secondary" onclick="navigate('about')">Sobre mí</a>
+      <p class="about-text">
+        Mi diferencial no es una sola disciplina. Es la capacidad de ver cómo un sistema de datos mejora una operación logística, cómo esa operación puede convertirse en un producto SaaS, y cómo ese producto necesita un diseño que comunique precisión.
+      </p>
+      <p class="about-text">
+        Construyo bajo la identidad <strong>ARKOS</strong> — un paraguas para todos mis proyectos. Cada uno resuelve un problema real. Ninguno existe por existir.
+      </p>
+
+      <div class="about-disciplines">
+        <div class="discipline">
+          <span class="discipline-icon">◈</span>
+          <span>Logística & Operaciones</span>
+        </div>
+        <div class="discipline">
+          <span class="discipline-icon">◈</span>
+          <span>Analytics & Data Engineering</span>
+        </div>
+        <div class="discipline">
+          <span class="discipline-icon">◈</span>
+          <span>SaaS Design & Development</span>
+        </div>
+        <div class="discipline">
+          <span class="discipline-icon">◈</span>
+          <span>IA Aplicada a Negocio</span>
+        </div>
+        <div class="discipline">
+          <span class="discipline-icon">◈</span>
+          <span>Diseño Web & Producto</span>
+        </div>
       </div>
 
-      <!-- Promo Los Tres Pilares -->
-      <a href="pilares-landing.html" target="_blank" class="fade-up fade-up-4" style="display:flex;align-items:center;gap:16px;margin-top:24px;padding:14px 20px;background:linear-gradient(135deg,#0E1F3D 60%,#1B4FBF);border:1px solid #C8F135;border-radius:10px;text-decoration:none;max-width:480px;transition:transform 0.2s,box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(200,241,53,0.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="font-size:28px;flex-shrink:0;">📘</div>
-        <div>
-          <div style="font-size:11px;font-family:var(--mono);color:#C8F135;letter-spacing:0.08em;margin-bottom:3px;">NUEVO · PRODUCTO DIGITAL</div>
-          <div style="font-size:15px;font-weight:600;color:#F7F8FA;line-height:1.3;">Los Tres Pilares del Analista de Datos</div>
-          <div style="font-size:13px;color:#8A94A6;margin-top:2px;">Lo que ningún curso te enseña → <span style="color:#C8F135;">$9.99 USD</span></div>
+      <div class="cert-list">
+        <div class="cert-label">Formación</div>
+        <div class="cert-item">
+          <span>Diplomatura en Operaciones Logísticas</span>
+          <span class="cert-source">U.P.S.O</span>
         </div>
-        <div style="margin-left:auto;color:#C8F135;font-size:18px;flex-shrink:0;">→</div>
+        <div class="cert-item">
+          <span>Analytics — Data Science for Business</span>
+          <span class="cert-source">DS4B</span>
+        </div>
+        <div class="cert-item">
+          <span>IA en Proyectos de Data Science</span>
+          <span class="cert-source">DS4B</span>
+        </div>
+        <div class="cert-item">
+          <span>Excel Intermedio</span>
+          <span class="cert-source">Santander Academy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     LAB
+══════════════════════════════════════ -->
+<section class="section" id="lab">
+  <div class="section-header reveal">
+    <div class="section-tag">03 — Laboratorio</div>
+    <h2 class="section-title">LAB</h2>
+    <p class="section-sub">Experimentos, automatizaciones y proyectos construidos por curiosidad.</p>
+  </div>
+
+  <div class="lab-grid">
+
+    <div class="lab-card reveal">
+      <div class="lab-card-top">
+        <span class="lab-num">L·01</span>
+        <span class="tag tag-done">Completado</span>
+      </div>
+      <h4>Portfolio Web ARKOS</h4>
+      <p>Este mismo sitio. HTML, CSS y JS puro — sin frameworks. Navegación SPA, animaciones, deploy en Vercel.</p>
+      <div class="lab-stack"><span>HTML</span><span>CSS</span><span>JS</span><span>Vercel</span></div>
+    </div>
+
+    <div class="lab-card reveal">
+      <div class="lab-card-top">
+        <span class="lab-num">L·02</span>
+        <span class="tag tag-wip">En desarrollo</span>
+      </div>
+      <h4>Automatización de Reportes</h4>
+      <p>Sistema Python + n8n que extrae, transforma y distribuye reportes operativos diarios sin intervención manual.</p>
+      <div class="lab-stack"><span>Python</span><span>n8n</span><span>ETL</span></div>
+    </div>
+
+    <div class="lab-card reveal">
+      <div class="lab-card-top">
+        <span class="lab-num">L·03</span>
+        <span class="tag tag-wip">Próximo</span>
+      </div>
+      <h4>Bot de Telegram / Discord</h4>
+      <p>Automatización de tareas diarias vía bot. Python, APIs externas y lógica de negocio simple. Webhooks y eventos en tiempo real.</p>
+      <div class="lab-stack"><span>Python</span><span>APIs</span><span>Webhooks</span></div>
+    </div>
+
+    <div class="lab-card reveal">
+      <div class="lab-card-top">
+        <span class="lab-num">L·04</span>
+        <span class="tag tag-wip">Próximo</span>
+      </div>
+      <h4>Dashboard de KPIs Comerciales</h4>
+      <p>Modelado de datos y visualización ejecutiva para seguimiento de ventas, márgenes y performance por canal en Looker Studio.</p>
+      <div class="lab-stack"><span>Looker</span><span>SQL</span><span>Excel</span></div>
+    </div>
+
+    <div class="lab-card reveal">
+      <div class="lab-card-top">
+        <span class="lab-num">L·05</span>
+        <span class="tag tag-wip">Próximo</span>
+      </div>
+      <h4>Finanzas Personales con BI</h4>
+      <p>Tracking de datos financieros propios con Python + Power BI. Las mismas herramientas que uso profesionalmente, aplicadas a mi vida real.</p>
+      <div class="lab-stack"><span>Python</span><span>Excel</span><span>Power BI</span></div>
+    </div>
+
+    <div class="lab-card lab-card-cta reveal">
+      <div class="lab-num" style="margin-bottom: auto;">∞</div>
+      <p style="font-family: var(--serif); font-size: 20px; font-style: italic; color: #666; line-height: 1.5;">El laboratorio es un espacio vivo. Siempre hay algo en construcción.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CONTACT
+══════════════════════════════════════ -->
+<section class="section section-contact" id="contact">
+  <div class="contact-inner reveal">
+    <div class="section-tag">04 — Contacto</div>
+    <h2 class="contact-title">HABLEMOS<span class="aqua">.</span></h2>
+    <p class="contact-sub">¿Tenés un proyecto, una oportunidad o querés colaborar? Escribime.</p>
+
+    <div class="contact-links">
+      <a href="mailto:erickemmanueldorado@gmail.com" class="contact-link">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-val">erickemmanueldorado@gmail.com →</span>
       </a>
-
-    </div>
-
-    <div style="
-  display:flex;gap:32px;flex-wrap:wrap;
-  padding:28px 0;
-  border-bottom:1px solid var(--border);
-  border-top:1px solid var(--border);
-  margin-top:0;
-">
-  <div>
-    <div style="font-size:22px;font-weight:600;letter-spacing:-0.02em;color:var(--text)">1</div>
-    <div style="font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:2px">proyecto completado</div>
-  </div>
-  <div>
-    <div style="font-size:22px;font-weight:600;letter-spacing:-0.02em;color:var(--text)">5.000</div>
-    <div style="font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:2px">registros analizados</div>
-  </div>
-  <div>
-    <div style="font-size:22px;font-weight:600;letter-spacing:-0.02em;color:var(--text)">5</div>
-    <div style="font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:2px">herramientas integradas</div>
-  </div>
-  <div>
-    <div style="font-size:22px;font-weight:600;letter-spacing:-0.02em;color:var(--text)">3</div>
-    <div style="font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:2px">páginas de dashboard</div>
-  </div>
-</div>
-
-    <div class="home-grid">
-      <div>
-        <div class="home-grid-label">Stack actual</div>
-        <div class="stack-list">
-          <span class="stack-tag">SQL</span>
-          <span class="stack-tag">Excel</span>
-          <span class="stack-tag">Power BI</span>
-          <span class="stack-tag">Python</span>
-          <span class="stack-tag">Looker</span>
-          <span class="stack-tag">Git</span>
-        </div>
-      </div>
-      <div>
-        <div class="home-grid-label">Aprendiendo activamente</div>
-        <div class="stack-list">
-          <span class="stack-tag learning">dbt</span>
-          <span class="stack-tag learning">Airflow</span>
-          <span class="stack-tag learning">n8n</span>
-          <span class="stack-tag learning">Pandas</span>
-        </div>
-      </div>
-      <div>
-        <div class="home-grid-label">Áreas de interés</div>
-        <ul class="focus-list">
-          <li>Analytics logístico y operativo</li>
-          <li>Automatización de flujos de datos</li>
-          <li>IA aplicada a problemas de negocio</li>
-          <li>Dashboards orientados a decisiones</li>
-        </ul>
-      </div>
-      <div>
-        <div class="home-grid-label">Enfoque actual</div>
-        <ul class="focus-list">
-          <li>Construcción de proyectos reales de datos</li>
-          <li>Documentación técnica como práctica</li>
-          <li>Entender sistemas antes de optimizarlos</li>
-          <li>Aprendizaje aplicado, no teórico</li>
-        </ul>
-      </div>
-
-      <div class="status-block">
-        <div class="status-dot"></div>
-        <p class="status-text">
-          <strong>En transición activa.</strong>
-          Analista de datos en construcción — desarrollando proyectos reales mientras sigo aprendiendo.
-          Punta Alta, Buenos Aires, Argentina.
-        </p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════ PROJECTS ══════════════ -->
-<section id="projects">
-  <div class="container">
-    <div class="page-header fade-up fade-up-1">
-      <h1>Proyectos</h1>
-      <p>Experimentos reales, simulaciones pensadas y sistemas en construcción.
-         Acá documento cómo pienso y cómo resuelvo.</p>
-    </div>
-
-    <div class="projects-list">
-
-      <!-- Proyecto 1 -->
-      <div class="project-card fade-up fade-up-2" onclick="navigate('detail-1')">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">01</span>
-            <span class="project-status status-done">Completado</span>
-          </div>
-          <h3>Pipeline de Analytics Logístico</h3>
-          <p>Pipeline end-to-end de análisis logístico: generación de datos, ETL con Python,
-             análisis SQL con DuckDB y dashboard ejecutivo en Power BI (3 páginas + DAX).
-             OTD global 61.3% — identificación de carriers y zonas con mayor impacto.</p>
-          <div class="project-tags">
-            <span class="project-tag">Python</span>
-            <span class="project-tag">SQL · DuckDB</span>
-            <span class="project-tag">Power BI · DAX</span>
-            <span class="project-tag">ETL</span>
-            <span class="project-tag">Excel</span>
-            <span class="project-tag">GitHub</span>
-          </div>
-        </div>
-        <div class="project-arrow">→</div>
-      </div>
-
-      <!-- Proyecto 2 placeholder -->
-      <div class="project-card fade-up fade-up-3" onclick="navigate('detail-2')">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">02</span>
-            <span class="project-status status-soon">Próximamente</span>
-          </div>
-          <h3>Automatización de Reportes con Python + n8n</h3>
-          <p>Sistema que extrae datos de múltiples fuentes, los transforma automáticamente
-             y los distribuye como reporte diario. Foco en operaciones repetitivas de bajo valor.</p>
-          <div class="project-tags">
-            <span class="project-tag">Python</span>
-            <span class="project-tag">n8n</span>
-            <span class="project-tag">Automatización</span>
-            <span class="project-tag">ETL básico</span>
-          </div>
-        </div>
-        <div class="project-arrow">→</div>
-      </div>
-
-      <!-- Proyecto 3 placeholder -->
-      <div class="project-card fade-up fade-up-4" onclick="navigate('detail-3')">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">03</span>
-            <span class="project-status status-soon">Próximamente</span>
-          </div>
-          <h3>Dashboard de KPIs Comerciales con Looker</h3>
-          <p>Modelado de datos y construcción de dashboard ejecutivo para seguimiento
-             de ventas, márgenes y performance por canal. Dataset público + Looker Studio.</p>
-          <div class="project-tags">
-            <span class="project-tag">Looker</span>
-            <span class="project-tag">SQL</span>
-            <span class="project-tag">Business Analytics</span>
-            <span class="project-tag">Visualización</span>
-          </div>
-        </div>
-        <div class="project-arrow">→</div>
-      </div>
-
-    </div>
-
-    <div class="coming-soon-banner fade-up fade-up-4">
-      <h4>Proyectos 02 y 03 en construcción</h4>
-        <p>El Proyecto 01 está completo y documentado. Los siguientes están en desarrollo activo — cada uno incluirá problema, arquitectura, código, dashboard e insights accionables.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════ PROJECT DETAIL 1 ══════════════ -->
-<section id="detail-1">
-  <div class="container">
-    <a class="detail-back" onclick="navigate('projects')">← Volver a proyectos</a>
-
-    <div class="detail-hero fade-up fade-up-1">
-      <div class="project-meta" style="margin-bottom:14px">
-        <span class="project-status status-done">Completado</span>
-      </div>
-      <h1>Pipeline de Analytics Logístico</h1>
-      <p>Pipeline end-to-end de análisis de operaciones logísticas: generación de datos sintéticos,
-         limpieza y ETL con Python, análisis SQL con DuckDB y dashboard ejecutivo en Power BI.
-         Incluye recomendaciones ejecutivas y plan de acción basado en los datos.</p>
-      <div class="detail-meta">
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Stack</span>
-          <span class="detail-meta-value">Python · SQL · DuckDB · Power BI · DAX · Excel</span>
-        </div>
-        <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;">
-          <a class="btn-primary"
-              href="https://github.com/ErickDorado/proyecto-pipeline-logistico"
-              target="_blank">
-    Ver repositorio →
-          </a>
-          <a class="btn-secondary"
-         href="https://github.com/ErickDorado/proyecto-pipeline-logistico/raw/main/dashboards/logistics_dashboard.pdf"
-          target="_blank">
-    Ver dashboard PDF
-          </a>
-</div>
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Área</span>
-          <span class="detail-meta-value">Analytics Logístico</span>
-        </div>
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Dataset</span>
-          <span class="detail-meta-value">5.000 pedidos · 2023–2024</span>
-        </div>
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Repositorio</span>
-          <span class="detail-meta-value">
-            <a href="https://github.com/ErickDorado/proyecto-pipeline-logistico" target="_blank"
-               style="color:var(--accent);text-decoration:none;">
-              GitHub →
-            </a>
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="detail-body">
-
-      <div class="detail-section fade-up fade-up-2">
-        <div class="detail-section-label">Problema</div>
-        <h3>¿Qué problema resuelve?</h3>
-        <p>Las operaciones logísticas generan datos de entregas que rara vez se analizan de forma estructurada.
-           Los equipos no saben qué carriers fallan más, qué zonas tienen peores tiempos ni cuándo ocurren los picos de devoluciones.</p>
-        <p>Este proyecto construye desde cero una capa de analytics completa que responde esas preguntas con datos,
-           y cierra con recomendaciones concretas para mejorar el OTD global del 61.3% al 75%.</p>
-      </div>
-
-      <div class="detail-section fade-up fade-up-2">
-        <div class="detail-section-label">Arquitectura</div>
-        <h3>Cómo está estructurado el pipeline</h3>
-        <div class="arch-diagram">
-          <div class="arch-step">
-            <div class="arch-box">generate_data.py</div>
-            <div class="arch-arrow">→</div>
-            <div class="arch-box">eda.py</div>
-            <div class="arch-arrow">→</div>
-            <div class="arch-box accent">etl.py</div>
-          </div>
-          <div style="color:var(--text-3);font-size:20px;padding:4px 0">↓</div>
-          <div class="arch-step">
-            <div class="arch-box">SQL · DuckDB</div>
-            <div class="arch-arrow">→</div>
-            <div class="arch-box accent">Power BI Dashboard</div>
-            <div class="arch-arrow">→</div>
-            <div class="arch-box">Recomendaciones</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-section fade-up fade-up-3">
-        <div class="detail-section-label">SQL · DuckDB</div>
-        <h3>Análisis de performance por carrier y zona</h3>
-        <div class="code-block">
-          <pre><span class="code-comment">-- OTD y demora promedio por carrier</span>
-<span class="code-keyword">SELECT</span>
-  carrier,
-  <span class="code-func">COUNT</span>(*)                                                         <span class="code-keyword">AS</span> total_pedidos,
-  <span class="code-func">ROUND</span>(<span class="code-func">AVG</span>(<span class="code-keyword">CASE WHEN</span> entrega_a_tiempo <span class="code-keyword">THEN</span> <span class="code-num">1.0</span> <span class="code-keyword">ELSE</span> <span class="code-num">0</span> <span class="code-keyword">END</span>)*<span class="code-num">100</span>, <span class="code-num">1</span>) <span class="code-keyword">AS</span> otd_pct,
-  <span class="code-func">ROUND</span>(<span class="code-func">AVG</span>(demora_dias), <span class="code-num">2</span>)                                          <span class="code-keyword">AS</span> demora_promedio
-<span class="code-keyword">FROM</span> <span class="code-string">'data/processed/fact_orders.csv'</span>
-<span class="code-keyword">GROUP BY</span> carrier
-<span class="code-keyword">ORDER BY</span> otd_pct <span class="code-keyword">DESC</span>;</pre>
-        </div>
-      </div>
-
-      <div class="detail-section fade-up fade-up-3">
-        <div class="detail-section-label">Hallazgos</div>
-        <h3>Lo que los datos revelaron</h3>
-        <div class="insight-grid">
-          <div class="insight-card">
-            <div class="label">OTD Global · 61.3%</div>
-            <p>24 puntos por debajo del estándar de industria (85%). 4 de cada 10 pedidos llegan fuera de fecha.</p>
-          </div>
-          <div class="insight-card">
-            <div class="label">Brecha geográfica crítica</div>
-            <p>CABA lidera con 74.8% OTD vs. Córdoba en 41.1% — 34 puntos de diferencia entre zonas.</p>
-          </div>
-          <div class="insight-card">
-            <div class="label">Carrier ganador y a reemplazar</div>
-            <p>Andreani lidera con 63.9% OTD. Correo Argentino tiene el peor OTD (59.6%) y el mayor costo ($1.354).</p>
-          </div>
-          <div class="insight-card">
-            <div class="label">Combinación óptima</div>
-            <p>Rappi Envíos en CABA alcanza 77.6% OTD — los carriers urbanos rinden mejor en proximidad.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-section fade-up fade-up-4">
-        <div class="detail-section-label">Recomendaciones ejecutivas</div>
-        <ul>
-          <li>Reasignar volumen de Correo Argentino a Andreani → +2 a +3 pts OTD</li>
-          <li>Implementar regla de carrier por zona (Rappi→CABA, OCA→GBA Norte) → +5 a +8 pts OTD</li>
-          <li>Intervención urgente en Córdoba: ampliar plazo prometido a 5 días → +2 pts OTD</li>
-          <li>Refuerzo operativo en Febrero y Noviembre (meses críticos con OTD &lt; 58%)</li>
-          <li>Potencial total: pasar de 61.3% a ~75% OTD sin inversión tecnológica nueva</li>
-        </ul>
-      </div>
-
-      <div class="detail-section fade-up fade-up-4">
-        <div class="detail-section-label">Próximas iteraciones</div>
-        <ul>
-          <li>Simulación de impacto económico: traducir mejoras de OTD a pesos</li>
-          <li>Score de riesgo por pedido: modelo predictivo de probabilidad de demora</li>
-          <li>Automatización del pipeline con scheduling diario</li>
-          <li>Conexión a datos reales vía API o base de datos PostgreSQL</li>
-        </ul>
-      </div>
-
+      <a href="https://linkedin.com/in/erick-emmanuel-dorado" target="_blank" class="contact-link">
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-val">Erick Emmanuel Dorado →</span>
+      </a>
+      <a href="https://github.com/ErickDorado" target="_blank" class="contact-link">
+        <span class="contact-link-label">GitHub</span>
+        <span class="contact-link-val">ErickDorado →</span>
+      </a>
+      <a href="https://wa.me/+5492932413717" target="_blank" class="contact-link">
+        <span class="contact-link-label">WhatsApp</span>
+        <span class="contact-link-val">Escribime directo →</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ PROJECT DETAIL 2 ══════════════ -->
-<section id="detail-2">
-  <div class="container">
-    <a class="detail-back" onclick="navigate('projects')">← Volver a proyectos</a>
-    <div class="detail-hero fade-up fade-up-1">
-      <div class="project-meta" style="margin-bottom:14px">
-        <span class="project-status status-soon">Próximamente</span>
-      </div>
-      <h1>Automatización de Reportes con Python + n8n</h1>
-      <p>Sistema que elimina trabajo manual en la generación y distribución de reportes operativos diarios.</p>
-      <div class="detail-meta">
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Stack</span>
-          <span class="detail-meta-value">Python · n8n · SQL</span>
-        </div>
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Área</span>
-          <span class="detail-meta-value">Automatización</span>
-        </div>
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Estado</span>
-          <span class="detail-meta-value">En desarrollo</span>
-        </div>
-      </div>
-    </div>
-    <div class="detail-body">
-      <div class="detail-section fade-up fade-up-2">
-        <div class="detail-section-label">Problema</div>
-        <h3>El trabajo repetitivo consume tiempo real</h3>
-        <p>En muchas operaciones, alguien dedica 30-60 minutos por día a copiar datos de un sistema, pegarlos en Excel, formatear un reporte y enviarlo por email. Es trabajo de bajo valor que puede automatizarse completamente.</p>
-        <p>Este proyecto construye ese flujo automatizado: extracción, transformación, reporte y distribución — sin intervención manual.</p>
-      </div>
-      <div class="detail-section fade-up fade-up-2">
-        <div class="detail-section-label">Arquitectura</div>
-        <h3>Flujo del sistema</h3>
-        <div class="arch-diagram">
-          <div class="arch-step">
-            <div class="arch-box">Fuente de datos (CSV / DB)</div>
-            <div class="arch-arrow">→</div>
-            <div class="arch-box accent">Python script</div>
-            <div class="arch-arrow">→</div>
-            <div class="arch-box">Reporte generado</div>
-          </div>
-          <div style="color:var(--text-3);font-size:20px;padding:4px 0">↓</div>
-          <div class="arch-step">
-            <div class="arch-box accent">n8n (trigger + distribución)</div>
-            <div class="arch-arrow">→</div>
-            <div class="arch-box">Email / Slack / Google Sheets</div>
-          </div>
-        </div>
-      </div>
-      <div class="detail-section fade-up fade-up-3">
-        <div class="detail-section-label">Qué voy a aprender</div>
-        <ul>
-          <li>Orquestación de flujos con n8n (workflows, triggers, conectores)</li>
-          <li>Generación de reportes con Python (openpyxl, pandas)</li>
-          <li>Integración entre herramientas sin código complejo</li>
-          <li>Diseño de sistemas de automatización escalables</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ PROJECT DETAIL 3 ══════════════ -->
-<section id="detail-3">
-  <div class="container">
-    <a class="detail-back" onclick="navigate('projects')">← Volver a proyectos</a>
-    <div class="detail-hero fade-up fade-up-1">
-      <div class="project-meta" style="margin-bottom:14px">
-        <span class="project-status status-soon">Próximamente</span>
-      </div>
-      <h1>Dashboard de KPIs Comerciales con Looker</h1>
-      <p>Modelado de datos y visualización ejecutiva para seguimiento de ventas, márgenes y performance por canal.</p>
-      <div class="detail-meta">
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Stack</span>
-          <span class="detail-meta-value">Looker Studio · SQL · Excel</span>
-        </div>
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Área</span>
-          <span class="detail-meta-value">Business Analytics</span>
-        </div>
-        <div class="detail-meta-item">
-          <span class="detail-meta-label">Estado</span>
-          <span class="detail-meta-value">En desarrollo</span>
-        </div>
-      </div>
-    </div>
-    <div class="detail-body">
-      <div class="detail-section fade-up fade-up-2">
-        <div class="detail-section-label">Problema</div>
-        <h3>Datos comerciales sin visibilidad ejecutiva</h3>
-        <p>Muchas pymes tienen sus datos de ventas en planillas sueltas sin ningún dashboard que permita tomar decisiones rápidas. Este proyecto toma un dataset público de ventas y construye una capa de visualización ejecutiva real.</p>
-      </div>
-      <div class="detail-section fade-up fade-up-3">
-        <div class="detail-section-label">KPIs a construir</div>
-        <div class="insight-grid">
-          <div class="insight-card">
-            <div class="label">Revenue total y por canal</div>
-            <p>Desglose de ventas por canal de distribución y período.</p>
-          </div>
-          <div class="insight-card">
-            <div class="label">Margen bruto</div>
-            <p>Comparativa de margen por producto y categoría.</p>
-          </div>
-          <div class="insight-card">
-            <div class="label">Tendencia mensual</div>
-            <p>Evolución temporal de métricas clave con comparación vs período anterior.</p>
-          </div>
-          <div class="insight-card">
-            <div class="label">Performance por región</div>
-            <p>Mapa y tabla comparativa de performance geográfica.</p>
-          </div>
-        </div>
-      </div>
-      <div class="detail-section fade-up fade-up-4">
-        <div class="detail-section-label">Qué voy a aprender</div>
-        <ul>
-          <li>Modelado de datos para dashboards ejecutivos</li>
-          <li>Conectores de Looker Studio con fuentes de datos externas</li>
-          <li>Diseño de visualizaciones orientadas a decisión, no a información</li>
-          <li>SQL para cálculo de métricas de negocio (YoY, MoM, acumulados)</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ LAB ══════════════ -->
-<section id="lab">
-  <div class="container">
-    <div class="page-header fade-up fade-up-1">
-      <h1>Laboratorio</h1>
-      <p>Proyectos personales, experimentos y cosas que construyo por curiosidad.
-         Acá vive todo lo que no entra en el perfil profesional pero define cómo pienso.</p>
-    </div>
-
-    <div class="projects-list">
-
-      <!-- Lab 1 — Portfolio web -->
-      <div class="project-card fade-up fade-up-2" style="cursor:default;">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">L-01</span>
-            <span class="project-status status-done">Completado</span>
-          </div>
-          <h3>Portfolio Web personal</h3>
-          <p>Diseño y desarrollo de este portfolio desde cero con HTML, CSS y JavaScript puro.
-             Sin frameworks, sin templates. Navegación SPA, animaciones, formulario de contacto
-             con Formspree y deploy en Vercel.</p>
-          <div class="project-tags">
-            <span class="project-tag">HTML</span>
-            <span class="project-tag">CSS</span>
-            <span class="project-tag">JavaScript</span>
-            <span class="project-tag">Vercel</span>
-            <span class="project-tag">Formspree</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lab 2 — SaaS con IA -->
-      <div class="project-card fade-up fade-up-3" style="cursor:default;">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">L-02</span>
-            <span class="project-status status-soon">Próximamente</span>
-          </div>
-          <h3>SaaS con IA</h3>
-          <p>Herramienta web que resuelve un problema concreto usando modelos de lenguaje.
-             Foco en utilidad real, no en demostración tecnológica.
-             Stack por definir según el problema que valga la pena resolver.</p>
-          <div class="project-tags">
-            <span class="project-tag">IA aplicada</span>
-            <span class="project-tag">Python</span>
-            <span class="project-tag">API</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lab 3 — Juego -->
-      <div class="project-card fade-up fade-up-3" style="cursor:default;">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">L-03</span>
-            <span class="project-status status-soon">Próximamente</span>
-          </div>
-          <h3>Juego con IA</h3>
-          <p>Experimento de game design asistido por IA. La idea es explorar
-             hasta dónde se puede llegar sin experiencia en desarrollo de juegos,
-             usando IA como co-desarrollador.</p>
-          <div class="project-tags">
-            <span class="project-tag">IA aplicada</span>
-            <span class="project-tag">Game design</span>
-            <span class="project-tag">Experimento</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lab 4 — Bot -->
-      <div class="project-card fade-up fade-up-4" style="cursor:default;">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">L-04</span>
-            <span class="project-status status-soon">Próximamente</span>
-          </div>
-          <h3>Bot de Telegram / Discord</h3>
-          <p>Automatización de algo útil del día a día via bot. Combina Python,
-             APIs externas y lógica de negocio simple. Buena excusa para aprender
-             webhooks y manejo de eventos en tiempo real.</p>
-          <div class="project-tags">
-            <span class="project-tag">Python</span>
-            <span class="project-tag">APIs</span>
-            <span class="project-tag">Automatización</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lab 5 — Dashboard personal -->
-      <div class="project-card fade-up fade-up-4" style="cursor:default;">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">L-05</span>
-            <span class="project-status status-soon">Próximamente</span>
-          </div>
-          <h3>Dashboard de finanzas personales</h3>
-          <p>Tracking de mis propios datos financieros con las mismas herramientas
-             que uso profesionalmente. Python + Excel + Power BI aplicados a algo
-             100% personal. Demuestra que uso mis propias herramientas en mi vida real.</p>
-          <div class="project-tags">
-            <span class="project-tag">Python</span>
-            <span class="project-tag">Excel</span>
-            <span class="project-tag">Power BI</span>
-            <span class="project-tag">Personal</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lab 6 — Producto digital -->
-      <div class="project-card fade-up fade-up-4" style="cursor:default;">
-        <div class="project-card-left">
-          <div class="project-meta">
-            <span class="project-index">L-06</span>
-            <span class="project-status status-done">Publicado</span>
-          </div>
-          <h3>Los Tres Pilares del Analista de Datos</h3>
-          <p>Producto digital sobre lo que ningún curso de datos te enseña: mentalidad,
-             soft skills y mentalidad de negocio. 9 páginas, 3 pilares y 5 ejercicios
-             prácticos. Experiencia vivida mapeada para quien está en transición hacia datos.</p>
-          <div class="project-tags">
-            <span class="project-tag">Producto digital</span>
-            <span class="project-tag">Ebook</span>
-            <span class="project-tag">$9.99 USD</span>
-          </div>
-          <div style="margin-top:16px;">
-            <a href="pilares-landing.html" target="_blank"
-               style="display:inline-block;padding:8px 18px;background:var(--accent,#C8F135);color:#0E1F3D;font-weight:600;border-radius:6px;text-decoration:none;font-size:14px;">
-              Ver landing →
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="coming-soon-banner fade-up fade-up-4">
-      <h4>Experimentos en curso</h4>
-      <p>El laboratorio es un espacio vivo. Los proyectos L-02 a L-05 están en etapa de ideación
-         y se van a ir construyendo en paralelo al portfolio profesional.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════ ABOUT ══════════════ -->
-<section id="about">
-  <div class="container">
-    <div class="page-header fade-up fade-up-1">
-      <h1>Sobre mí</h1>
-      <p>Quién soy, qué me interesa construir y hacia dónde voy.</p>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-main fade-up fade-up-2">
-        <h2>Hola, soy Erick.</h2>
-        <p>
-          Soy Tecnólogo Empresarial de Punta Alta, Buenos Aires, Argentina.
-          Estoy en una transición activa hacia el mundo de analytics y datos,
-          con foco en logística operativa y automatización de procesos.
-        </p>
-        <p>
-          Me interesa el cruce entre sistemas, datos y negocio. No me alcanza con
-          aprender herramientas — lo que quiero es entender cómo funcionan los procesos
-          reales para poder mejorarlos con datos bien estructurados.
-        </p>
-        <p>
-          Trabajo con SQL, Excel, Power BI, Python y Git en proyectos que diseño yo mismo
-          para aprender haciendo. Ya apliqué pandas y DuckDB en producción dentro de un
-          pipeline ETL completo. También me atrae la IA aplicada: cómo usarla para resolver
-          problemas concretos, no como tendencia, sino como herramienta real.
-        </p>
-        <p>
-          Estoy construyendo mi perfil profesional con proyectos propios,
-          documentación técnica y aprendizaje constante. Este portfolio
-          es parte de ese proceso.
-        </p>
-        <div style="margin-top:28px">
-          <a class="btn-primary" onclick="navigate('contact')">Contactarme →</a>
-        </div>
-      </div>
-
-      <div class="about-sidebar fade-up fade-up-3">
-        <div class="sidebar-block">
-          <div class="sidebar-block-label">Stack actual</div>
-          <ul>
-            <li><span class="icon">📊</span> Excel avanzado</li>
-            <li><span class="icon">🗄️</span> SQL</li>
-            <li><span class="icon">📈</span> Power BI</li>
-            <li><span class="icon">🐍</span> Python</li>
-            <li><span class="icon">🔍</span> Looker Studio</li>
-            <li><span class="icon">🌿</span> Git · GitHub</li>
-          </ul>
-        </div>
-
-        <div class="sidebar-block">
-          <div class="sidebar-block-label">Aprendiendo</div>
-          <ul>
-            <li><span class="icon">🔧</span> dbt <span class="learning-tag">activo</span></li>
-            <li><span class="icon">⚡</span> n8n <span class="learning-tag">activo</span></li>
-            <li><span class="icon">🐼</span> Pandas <span class="learning-tag">activo</span></li>
-            <li><span class="icon">🌀</span> Airflow <span class="learning-tag">próximo</span></li>
-          </ul>
-        </div>
-
-        <div class="sidebar-block">
-          <div class="sidebar-block-label">Ubicación</div>
-          <ul>
-            <li><span class="icon">📍</span> Punta Alta, Buenos Aires</li>
-            <li><span class="icon">🇦🇷</span> Argentina</li>
-            <li><span class="icon">🌐</span> Disponible remoto</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════ CONTACT ══════════════ -->
-<section id="contact">
-  <div class="container">
-    <div class="page-header fade-up fade-up-1">
-      <h1>Contacto</h1>
-      <p>¿Tenés un proyecto, una pregunta o querés charlar sobre datos y sistemas? Escribime.</p>
-    </div>
-
-    <div class="contact-layout">
-      <div class="contact-left fade-up fade-up-2">
-        <h2>Hablemos.</h2>
-        <p>
-          Estoy abierto a oportunidades, colaboraciones, feedback sobre proyectos
-          y cualquier conversación sobre analytics, automatización o IA aplicada.
-        </p>
-
-        <div class="contact-links">
-          <a class="contact-link" href="mailto:erickemmanueldorado@gmail.com">
-            <div class="contact-link-icon icon-email">✉️</div>
-            <div class="contact-link-info">
-              <div class="contact-link-label">Email</div>
-              <div class="contact-link-value">erickemmanueldorado@gmail.com</div>
-            </div>
-            <div class="contact-link-arrow">↗</div>
-          </a>
-
-          <a class="contact-link" href="https://www.linkedin.com/in/erick-emmanuel-dorado/" target="_blank">
-            <div class="contact-link-icon icon-linkedin">💼</div>
-            <div class="contact-link-info">
-              <div class="contact-link-label">LinkedIn</div>
-              <div class="contact-link-value">Erick Emmanuel Dorado</div>
-            </div>
-            <div class="contact-link-arrow">↗</div>
-          </a>
-
-          <a class="contact-link" href="https://github.com/ErickDorado" target="_blank">
-            <div class="contact-link-icon icon-github">🐙</div>
-            <div class="contact-link-info">
-              <div class="contact-link-label">GitHub</div>
-              <div class="contact-link-value">Erick Dorado</div>
-            </div>
-            <div class="contact-link-arrow">↗</div>
-          </a>
-          <a class="contact-link" href="https://wa.me/+5492932413717" target="_blank">
-            <div class="contact-link-icon" style="background:#f0fdf4;">💬</div>
-            <div class="contact-link-info">
-              <div class="contact-link-label">WhatsApp</div>
-              <div class="contact-link-value">Escribime directo</div>
-            </div>
-            <div class="contact-link-arrow">↗</div>
-          </a>
-        </div>
-      </div>
-
-      <div class="contact-right fade-up fade-up-3">
-  <h3>Enviarme un mensaje</h3>
-  <div class="form-group">
-    <label>NOMBRE</label>
-    <input type="text" name="nombre" id="form-name" placeholder="Tu nombre" required />
-  </div>
-  <div class="form-group">
-    <label>EMAIL</label>
-    <input type="email" name="email" id="form-email" placeholder="tu@email.com" required />
-  </div>
-  <div class="form-group">
-    <label>MENSAJE</label>
-    <textarea name="mensaje" id="form-message" placeholder="¿En qué estás pensando?" required></textarea>
-  </div>
-  <button class="form-submit" onclick="handleSubmit()">Enviar mensaje →</button>
-  <p id="form-status" style="font-size:13px;margin-top:12px;color:var(--text-3);display:none;"></p>
-</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══════════════ CERTIFICATIONS ══════════════ -->
-<section id="certifications">
-  <div class="container">
-    <div class="page-header fade-up fade-up-1">
-      <h1>Certificaciones</h1>
-      <p>Formación formal, credenciales verificables y capacitaciones en curso.
-         Aprendo con estructura, no solo por curiosidad.</p>
-    </div>
-
-    <div class="cert-grid">
-
-      <!-- Diplomatura -->
-      <div class="cert-card fade-up fade-up-2">
-        <div class="cert-icon">🎓</div>
-        <div class="cert-body">
-          <div class="cert-institution">U.P.S.O · Universidad Provincial del Sudoeste</div>
-          <div class="cert-name">Diplomatura en Operaciones Logísticas</div>
-          <div class="cert-tags">
-            <span class="cert-tag">Logística</span>
-            <span class="cert-tag">Operaciones</span>
-            <span class="cert-tag">Supply Chain</span>
-          </div>
-        </div>
-        <div class="cert-badge cert-badge-done">Completado</div>
-      </div>
-
-      <!-- Excel Santander -->
-      <div class="cert-card fade-up fade-up-2">
-        <div class="cert-icon">📊</div>
-        <div class="cert-body">
-          <div class="cert-institution">Santander Academy</div>
-          <div class="cert-name">Excel Intermedio</div>
-          <div class="cert-tags">
-            <span class="cert-tag">Excel</span>
-            <span class="cert-tag">Análisis de datos</span>
-          </div>
-        </div>
-        <div class="cert-badge cert-badge-done">Completado</div>
-      </div>
-
-      <!-- DS4B - Analista de datos -->
-      <div class="cert-card fade-up fade-up-3">
-        <div class="cert-icon">📈</div>
-        <div class="cert-body">
-          <div class="cert-institution">DS4B · Data Science for Business</div>
-          <div class="cert-name">Tu primera experiencia como Analista de Datos</div>
-          <div class="cert-tags">
-            <span class="cert-tag">Data Analytics</span>
-            <span class="cert-tag">Business</span>
-          </div>
-        </div>
-        <div class="cert-badge cert-badge-done">Completado</div>
-      </div>
-
-      <!-- DS4B - IA -->
-      <div class="cert-card fade-up fade-up-3">
-        <div class="cert-icon">🤖</div>
-        <div class="cert-body">
-          <div class="cert-institution">DS4B · Data Science for Business</div>
-          <div class="cert-name">Introducción al uso de IA en Proyectos de Data Science</div>
-          <div class="cert-tags">
-            <span class="cert-tag">Inteligencia Artificial</span>
-            <span class="cert-tag">Data Science</span>
-          </div>
-        </div>
-        <div class="cert-badge cert-badge-done">Completado</div>
-      </div>
-
-      <!-- Autoelevador -->
-      <div class="cert-card fade-up fade-up-3">
-        <div class="cert-icon">🏭</div>
-        <div class="cert-body">
-          <div class="cert-institution">Certificación Profesional</div>
-          <div class="cert-name">Operador de Autoelevador Profesional</div>
-          <div class="cert-tags">
-            <span class="cert-tag">Logística</span>
-            <span class="cert-tag">Operaciones</span>
-            <span class="cert-tag">Habilitación</span>
-          </div>
-        </div>
-        <div class="cert-badge cert-badge-done">Completado</div>
-      </div>
-
-    </div>
-
-    <!-- En curso -->
-    <div class="cert-section-label fade-up fade-up-3">En formación activa</div>
-    <div class="cert-grid">
-
-      <div class="cert-card cert-card-active fade-up fade-up-4">
-        <div class="cert-icon">🌐</div>
-        <div class="cert-body">
-          <div class="cert-institution">Cisco Networking Academy</div>
-          <div class="cert-name">Programas de certificación en tecnología y redes</div>
-          <div class="cert-tags">
-            <span class="cert-tag">Cisco</span>
-            <span class="cert-tag">Networking</span>
-            <span class="cert-tag">IA</span>
-          </div>
-        </div>
-        <div class="cert-badge cert-badge-active">En curso</div>
-      </div>
-
-      <div class="cert-card cert-card-active fade-up fade-up-4">
-        <div class="cert-icon">🏫</div>
-        <div class="cert-body">
-          <div class="cert-institution">CeNET · Centro de e-Learning</div>
-          <div class="cert-name">Formación docente para dictado de clases certificadas</div>
-          <div class="cert-tags">
-            <span class="cert-tag">Educación</span>
-            <span class="cert-tag">Docencia</span>
-            <span class="cert-tag">Certificación</span>
-          </div>
-        </div>
-        <div class="cert-badge cert-badge-active">En curso</div>
-      </div>
-
-    </div>
-
-    <div class="coming-soon-banner fade-up fade-up-4">
-      <h4>Formación continua como práctica</h4>
-      <p>Las certificaciones de Cisco y CeNET habilitan el dictado de clases en la Academia.
-         Aprendo, certifico y enseño en paralelo — cada credencial alimenta un curso nuevo.</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer class="footer">
   <div class="footer-inner">
-    <p class="footer-text">© 2026 <span>Erick Emmanuel Dorado</span> · Punta Alta, Argentina</p>
-    <p class="footer-mono">v1.0 · en construcción</p>
+    <div class="footer-logo">
+      <svg width="16" height="16" viewBox="0 0 120 120" fill="none">
+        <rect x="1" y="1" width="118" height="118" stroke="#7FFFD4" stroke-width="2"/>
+        <polygon points="60,18 97,82 23,82" stroke="#7FFFD4" stroke-width="2.5" fill="none"/>
+        <circle cx="60" cy="58" r="6" fill="#7FFFD4"/>
+      </svg>
+      ARKOS
+    </div>
+    <div class="footer-mid">
+      Erick Emmanuel Dorado · Punta Alta, Argentina
+    </div>
+    <div class="footer-right">
+      © 2024 · v2.0
+    </div>
   </div>
 </footer>
+
+<script src="main.js"></script>
+</body>
+</html>
