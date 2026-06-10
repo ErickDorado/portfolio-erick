@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erick Dorado — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  width: 100%; min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: #e0e6f0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 105%, rgba(0,212,180,0.55) 0%, rgba(0,180,150,0.18) 35%, transparent 65%),
+    linear-gradient(to top, #0a1a18 0%, #111823 40%, #0d1320 100%);
+  background-attachment: fixed;
+}
+
+/* ===================== ARKOS LOADER ===================== */
+#arkos-loader {
+  position: fixed; inset: 0; z-index: 9000;
+  background: #04080f;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+  font-family: 'Space Grotesk', sans-serif;
+  overflow: hidden;
+}
+#arkos-loader.done { animation: loaderFadeOut 0.6s ease forwards; }
+@keyframes loaderFadeOut { to { opacity: 0; pointer-events: none; } }
+
+.al-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,220,160,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,220,160,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.al-glow {
+  position: absolute;
+  width: 500px; height: 260px;
+  background: radial-gradient(ellipse, rgba(0,220,160,0.08) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.al-corner {
+  position: absolute; width: 20px; height: 20px; pointer-events: none;
+}
+.al-corner.tl { top: 16px; left: 16px; border-top: 1px solid rgba(0,220,160,0.28); border-left: 1px solid rgba(0,220,160,0.28); }
+.al-corner.tr { top: 16px; right: 16px; border-top: 1px solid rgba(0,220,160,0.28); border-right: 1px solid rgba(0,220,160,0.28); }
+.al-corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid rgba(0,220,160,0.28); border-left: 1px solid rgba(0,220,160,0.28); }
+.al-corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid rgba(0,220,160,0.28); border-right: 1px solid rgba(0,220,160,0.28); }
+
+.al-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.38em; color: rgba(0,220,160,0.9);
+  text-transform: uppercase; margin-bottom: 0.3rem; position: relative;
+}
+.al-tagline {
+  font-size: 10.5px; letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+  margin-bottom: 2.6rem; position: relative;
+}
+.al-kpi-row {
+  display: flex; gap: 1.2rem; margin-bottom: 2.4rem; position: relative;
+}
+.al-kpi {
+  background: rgba(255,255,255,0.03);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 0.9rem 1.3rem;
+  min-width: 148px; text-align: center; position: relative;
+  transition: border-color 0.4s;
+}
+.al-kpi.pulse { border-color: rgba(0,220,160,0.32); }
+.al-kpi-dot {
+  position: absolute; top: 9px; right: 9px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); transition: all 0.3s;
+}
+.al-kpi-dot.live { background: #00dc9f; box-shadow: 0 0 6px #00dc9f; }
+.al-kpi-label {
+  font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.28); margin-bottom: 0.4rem;
+  min-height: 13px; transition: opacity 0.22s;
+}
+.al-kpi-value {
+  font-family: 'Space Mono', monospace;
+  font-size: 21px; font-weight: 700;
+  color: rgba(255,255,255,0.9); letter-spacing: -0.02em; line-height: 1;
+}
+.al-kpi-unit {
+  font-size: 10px; color: rgba(0,220,160,0.65);
+  margin-top: 0.28rem; letter-spacing: 0.07em;
+}
+.al-chart-wrap {
+  width: 100%; max-width: 500px; position: relative; margin-bottom: 1.6rem;
+}
+.al-chart-toprow {
+  display: flex; justify-content: space-between;
+  margin-bottom: 0.35rem; padding: 0 2px;
+}
+.al-chart-lbl {
+  font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+.al-chart-pct {
+  font-size: 9.5px; letter-spacing: 0.1em;
+  color: rgba(0,220,160,0.65); font-family: 'Space Mono', monospace;
+}
+#alChart { display: block; width: 100%; border-radius: 5px; }
+.al-status-row {
+  display: flex; align-items: center; gap: 9px; position: relative;
+}
+.al-status-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #00dc9f; flex-shrink: 0;
+}
+.al-status-txt {
+  font-size: 10.5px; letter-spacing: 0.14em; color: rgba(255,255,255,0.3);
+  text-transform: uppercase; font-family: 'Space Mono', monospace;
+}
+.al-status-pct {
+  font-size: 10.5px; color: rgba(0,220,160,0.75);
+  font-family: 'Space Mono', monospace; margin-left: 5px;
+}
+
+/* ===================== PORTFOLIO LAYOUT ===================== */
+.page-wrap {
+  padding: 1.5rem;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.1rem;
+  align-items: stretch;
+}
+
+.panel {
+  position: relative;
+  border-radius: 22px;
+  background: rgba(22, 28, 42, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.06) inset,
+    0 -1px 0 rgba(0,0,0,0.4) inset,
+    0 8px 32px rgba(0,0,0,0.55),
+    0 2px 8px rgba(0,0,0,0.3),
+    0 0 0 1px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+.panel::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  border-radius: 22px 22px 0 0;
+  z-index: 1; pointer-events: none;
+}
+
+/* ===== HERO ===== */
+.hero {
+  grid-column: 1; grid-row: 1;
+  padding: 2.6rem 14rem 2.4rem 2.6rem; /* right padding deja espacio para el hex */
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 52vh;
+}
+.hero-hello { font-size: 0.85rem; font-weight: 400; color: #7a8499; margin-bottom: 0.2rem; }
+.hero-name {
+  font-size: clamp(1.7rem, 2.6vw, 2.7rem);
+  font-weight: 800; line-height: 1.1; margin-bottom: 0.3rem; color: #e8eef8;
+}
+.hero-role { font-size: clamp(0.82rem, 1.3vw, 1.05rem); font-weight: 600; margin-bottom: 0.85rem; color: #7a8499; }
+.hero-role span { color: #00d4b4; font-weight: 700; }
+.hero-desc { font-size: 0.74rem; line-height: 1.8; color: #7a8499; max-width: 300px; margin-bottom: 1.2rem; }
+.hero-socials { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; }
+.social-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #7a8499;
+  text-decoration: none; transition: all 0.2s; cursor: pointer;
+}
+.social-btn:hover { background: #00d4b4; color: #0d1320; border-color: #00d4b4; }
+.hero-btn {
+  display: inline-block; background: #00d4b4; color: #0d1320;
+  font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 700;
+  padding: 0.5rem 1.5rem; text-decoration: none; border-radius: 20px;
+  width: fit-content; transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(0,212,180,0.28);
+}
+.hero-btn:hover { background: #00f0ce; box-shadow: 0 6px 24px rgba(0,212,180,0.42); }
+
+/* Hexágono hero — centrado verticalmente, separado del borde derecho */
+.hex-container {
+  position: absolute;
+  right: 1.8rem;        /* margen derecho respecto al borde del panel */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+.hex-photo {
+  width: 190px; height: 219px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.hex-photo svg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  filter: drop-shadow(0 0 20px rgba(0,212,180,0.5)) drop-shadow(0 0 6px rgba(0,212,180,0.25));
+}
+.hex-img-fill {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  clip-path: polygon(50% 2%, 98% 26%, 98% 74%, 50% 98%, 2% 74%, 2% 26%);
+  object-fit: cover; z-index: 2;
+}
+.hex-initials {
+  font-size: 2.8rem; font-weight: 800; color: #00d4b4;
+  position: relative; z-index: 3; letter-spacing: -0.02em;
+  text-shadow: 0 0 18px rgba(0,212,180,0.35);
+}
+input.hex-file-input { display: none; }
+
+/* ===== ABOUT ===== */
+.about {
+  grid-column: 1; grid-row: 2;
+  padding: 2rem 2.2rem 2rem 2.4rem;
+  display: flex; align-items: center; gap: 0;
+  overflow: visible !important;
+}
+.about-hex-zone {
+  flex-shrink: 0; width: 140px; position: relative;
+  margin-left: -18px; margin-right: 1.2rem;
+  align-self: stretch; display: flex; align-items: center;
+}
+.about-hex-wrap {
+  width: 140px; height: 161px; position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.about-hex-wrap svg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  filter: drop-shadow(0 0 14px rgba(0,212,180,0.4)); z-index: 1;
+}
+.about-hex-img {
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 130%; max-width: none;
+  object-fit: cover; object-position: top; z-index: 3;
+}
+.about-initials { font-size: 2rem; font-weight: 800; color: #00d4b4; position: relative; z-index: 4; margin-bottom: 1rem; }
+.about-text { flex: 1; }
+.about-title { font-size: clamp(1.1rem, 1.7vw, 1.5rem); font-weight: 700; margin-bottom: 0.15rem; }
+.about-title span { color: #00d4b4; }
+.about-sub { font-size: 0.76rem; font-weight: 500; color: #00d4b4; margin-bottom: 0.6rem; }
+.about-desc { font-size: 0.71rem; line-height: 1.8; color: #7a8499; max-width: 340px; margin-bottom: 0.85rem; }
+.about-desc strong { color: #b0bac8; font-weight: 600; }
+.about-btn {
+  display: inline-block; background: #00d4b4; color: #0d1320;
+  font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 700;
+  padding: 0.45rem 1.2rem; text-decoration: none; border-radius: 20px;
+  transition: all 0.2s; box-shadow: 0 3px 12px rgba(0,212,180,0.22);
+}
+.about-btn:hover { background: #00f0ce; }
+
+/* ===== COLUMNA DERECHA ===== */
+.right-col {
+  grid-column: 2; grid-row: 1 / 3;
+  display: flex; flex-direction: column; gap: 1.1rem;
+}
+
+/* ===== SKILLS ===== */
+.services-panel { flex: 0 0 auto; padding: 1.6rem 2rem 1.5rem; }
+.panel-heading { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.85rem; color: #e8eef8; }
+.panel-heading span { color: #00d4b4; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+.service-card {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 0.85rem 0.75rem; transition: all 0.25s;
+}
+.service-card:hover {
+  background: rgba(0,212,180,0.08); border-color: rgba(0,212,180,0.28);
+  transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+.service-icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
+.service-name { font-size: 0.67rem; font-weight: 600; color: #c8d0de; margin-bottom: 0.2rem; }
+.service-desc { font-size: 0.58rem; line-height: 1.5; color: #505a6e; }
+
+/* ===== PROJECTS ===== */
+.projects-panel {
+  flex: 1 1 auto; padding: 1.4rem 2rem;
+  display: flex; flex-direction: column; min-height: 280px;
+}
+.gallery-scroll { flex: 1 1 auto; overflow-y: auto; padding-right: 2px; }
+.gallery-scroll::-webkit-scrollbar { width: 3px; }
+.gallery-scroll::-webkit-scrollbar-track { background: transparent; }
+.gallery-scroll::-webkit-scrollbar-thumb { background: rgba(0,212,180,0.2); border-radius: 2px; }
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; }
+.proj-card {
+  border-radius: 12px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07); aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 0.25rem;
+  transition: all 0.25s; cursor: pointer; padding: 0.6rem;
+  position: relative; overflow: hidden;
+}
+.proj-card:hover { border-color: rgba(0,212,180,0.35); transform: scale(1.04); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+.proj-emoji { font-size: 1.4rem; position: relative; z-index: 1; }
+.proj-label { font-size: 0.58rem; font-weight: 600; color: #c0c8d8; text-align: center; line-height: 1.3; position: relative; z-index: 1; }
+.proj-badge {
+  position: absolute; top: 6px; right: 6px;
+  font-size: 6.5px; font-weight: 700; letter-spacing: 0.05em;
+  padding: 2px 5px; border-radius: 8px; text-transform: uppercase; z-index: 2;
+}
+.badge-done { background: rgba(0,212,180,0.2); color: #00d4b4; }
+.badge-wip { background: rgba(247,140,108,0.2); color: #f78c6c; }
+.badge-idea { background: rgba(255,255,255,0.08); color: #6a7589; }
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 720px) {
+  .page-wrap {
+    grid-template-columns: 1fr; grid-template-rows: auto;
+    padding: 1rem; gap: 1rem;
+  }
+  .hero { grid-column: 1; grid-row: 1; min-height: auto; padding: 2rem 1.5rem 2rem; flex-direction: column; align-items: flex-start; }
+  .about { grid-column: 1; grid-row: 2; }
+  .right-col { grid-column: 1; grid-row: 3; }
+  .hex-container { position: static !important; transform: none !important; margin: 0 auto 1.4rem; display: flex; justify-content: center; }
+  .hex-photo { width: 150px; height: 173px; }
+  .about { flex-direction: column; align-items: center; text-align: center; padding: 2rem 1.5rem 1.8rem; gap: 1.2rem; }
+  .about-hex-zone { width: auto; margin: 0; align-self: auto; }
+  .about-text { width: 100%; }
+  .about-desc { max-width: 100%; }
+  .projects-panel { min-height: auto; }
+  .gallery-scroll { overflow-y: visible; max-height: none; }
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .proj-card { aspect-ratio: 1/1; }
+  .services-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .service-card { padding: 0.7rem 0.6rem; }
+  .al-kpi-row { gap: 0.7rem; }
+  .al-kpi { min-width: 110px; padding: 0.75rem 0.9rem; }
+  .al-kpi-value { font-size: 16px; }
+}
+@media (max-width: 440px) {
+  .page-wrap { padding: 0.75rem; gap: 0.75rem; }
+  .hero-name { font-size: 1.65rem; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .al-kpi-row { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== ARKOS LOADER ===================== -->
+<div id="arkos-loader">
+  <div class="al-grid"></div>
+  <div class="al-glow"></div>
+  <div class="al-corner tl"></div>
+  <div class="al-corner tr"></div>
+  <div class="al-corner bl"></div>
+  <div class="al-corner br"></div>
+
+  <div class="al-logo">ARKOS</div>
+  <div class="al-tagline">Synchronizing business intelligence</div>
+
+  <div class="al-kpi-row">
+    <div class="al-kpi" id="alKpi0">
+      <div class="al-kpi-dot live" id="alDot0"></div>
+      <div class="al-kpi-label" id="alLbl0">Revenue</div>
+      <div class="al-kpi-value" id="alVal0">$0</div>
+      <div class="al-kpi-unit">YTD</div>
+    </div>
+    <div class="al-kpi" id="alKpi1">
+      <div class="al-kpi-dot" id="alDot1"></div>
+      <div class="al-kpi-label" id="alLbl1">Clients</div>
+      <div class="al-kpi-value" id="alVal1">0</div>
+      <div class="al-kpi-unit">Active</div>
+    </div>
+    <div class="al-kpi" id="alKpi2">
+      <div class="al-kpi-dot" id="alDot2"></div>
+      <div class="al-kpi-label" id="alLbl2">Reviews</div>
+      <div class="al-kpi-value" id="alVal2">0.00</div>
+      <div class="al-kpi-unit">Avg ★</div>
+    </div>
+  </div>
+
+  <div class="al-chart-wrap">
+    <div class="al-chart-toprow">
+      <span class="al-chart-lbl">Sync progress</span>
+      <span class="al-chart-pct" id="alPctLbl">0%</span>
+    </div>
+    <canvas id="alChart" width="500" height="76"></canvas>
+  </div>
+
+  <div class="al-status-row">
+    <div class="al-status-dot"></div>
+    <span class="al-status-txt" id="alStatusTxt">Connecting to data streams</span>
+    <span class="al-status-pct" id="alStatusPct">—</span>
+  </div>
+</div>
+
+<!-- ===================== PORTFOLIO ===================== -->
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="panel hero">
+    <div class="hero-hello">Hola, soy</div>
+    <div class="hero-name">Erick Dorado</div>
+    <div class="hero-role">Y soy un <span>Systems Builder</span></div>
+    <p class="hero-desc">Construyo sistemas en el cruce entre datos, software y negocio. Analytics · SaaS · IA Aplicada · Diseño Web.</p>
+    <div class="hero-socials">
+      <a href="https://linkedin.com/in/erick-emmanuel-dorado" target="_blank" class="social-btn">in</a>
+      <a href="https://github.com/ErickDorado" target="_blank" class="social-btn">gh</a>
+      <a href="mailto:erickemmanueldorado@gmail.com" class="social-btn">@</a>
+      <a href="https://wa.me/+5492932413717" target="_blank" class="social-btn">wa</a>
+    </div>
+    <a href="#" class="hero-btn">Descargar CV</a>
+
+    <!-- Hexágono hero — bien separado del borde -->
+    <div class="hex-container">
+      <div class="hex-photo" id="heroHex">
+        <svg viewBox="0 0 190 219" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="95,4 186,51 186,168 95,215 4,168 4,51"
+            fill="rgba(0,212,180,0.07)" stroke="#00d4b4" stroke-width="1.8"/>
+        </svg>
+        <img class="hex-img-fill" id="heroImg" src="" alt="" style="display:none;">
+        <div class="hex-initials" id="heroInitials">ED</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="panel about">
+    <div class="about-hex-zone">
+      <div class="about-hex-wrap" id="aboutHex">
+        <svg viewBox="0 0 140 161" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="70,4 136,38 136,123 70,157 4,123 4,38"
+            fill="rgba(0,212,180,0.07)" stroke="#00d4b4" stroke-width="1.5"/>
+        </svg>
+        <img class="about-hex-img" id="aboutImg" src="" alt="" style="display:none;">
+        <div class="about-initials" id="aboutInitials">ED</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="about-title">About <span>Me</span></div>
+      <div class="about-sub">Systems Builder</div>
+      <p class="about-desc">
+        Soy Erick, de Punta Alta, Buenos Aires. Estudié Logística y construyo <strong>SaaS</strong>, analizo datos y diseño webs. Mi diferencial es cruzar disciplinas: datos, operaciones y producto en un solo sistema.
+      </p>
+      <a href="#" class="about-btn">Leer más</a>
+    </div>
+  </div>
+
+  <!-- COLUMNA DERECHA -->
+  <div class="right-col">
+    <div class="panel services-panel">
+      <div class="panel-heading">Mis <span>Skills</span></div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <div class="service-name">Data Analytics</div>
+          <div class="service-desc">Pipelines ETL, SQL, Power BI y dashboards ejecutivos.</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🚀</div>
+          <div class="service-name">SaaS Dev</div>
+          <div class="service-desc">Productos web para PyMEs: facturación y automatizaciones.</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🤖</div>
+          <div class="service-name">IA Aplicada</div>
+          <div class="service-desc">Bots, reportes automáticos y herramientas de IA real.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel projects-panel">
+      <div class="panel-heading">Latest <span>Project</span></div>
+      <div class="gallery-scroll">
+        <div class="projects-grid">
+          <div class="proj-card">
+            <div class="proj-badge badge-done">Listo</div>
+            <div class="proj-emoji">📦</div>
+            <div class="proj-label">Pipeline Logístico</div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-badge badge-wip">En dev</div>
+            <div class="proj-emoji">🦷</div>
+            <div class="proj-label">DentalOS</div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-badge badge-wip">En dev</div>
+            <div class="proj-emoji">💳</div>
+            <div class="proj-label">DebtOS</div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-badge badge-idea">Idea</div>
+            <div class="proj-emoji">🗺️</div>
+            <div class="proj-label">MapOS</div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-badge badge-done">Publicado</div>
+            <div class="proj-emoji">📖</div>
+            <div class="proj-label">Los Tres Pilares</div>
+          </div>
+          <div class="proj-card" style="opacity:0.3; border-style:dashed;">
+            <div class="proj-emoji" style="color:rgba(255,255,255,0.12)">+</div>
+            <div class="proj-label" style="color:#3a4456;">Próximamente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===================== ARKOS LOADER LOGIC ===================== */
+(function(){
+  const kpiDefs = [
+    { labels:['Revenue','Ganancias'], target:2847500, format: v => '$'+(v>=1e6?(v/1e6).toFixed(2)+'M':Math.round(v).toLocaleString()), unit:'YTD' },
+    { labels:['Clients','Clientes'],  target:1342,    format: v => Math.round(v).toLocaleString(), unit:'Active' },
+    { labels:['Reviews','Reseñas'],   target:4.87,    format: v => v.toFixed(2), unit:'Avg ★' }
+  ];
+  const phases = ['Connecting to data streams','Fetching revenue records','Syncing client database','Loading review analytics','Calibrating KPI engine','Validating data integrity','Rendering dashboards','Finalizing sync'];
+  const DURATION = 5000; // ms — loader dura 5 seg y cierra
+
+  const canvas = document.getElementById('alChart');
+  const ctx = canvas.getContext('2d');
+  const CW = 500, CH = 76;
+  canvas.width = CW*2; canvas.height = CH*2;
+  canvas.style.width = CW+'px'; canvas.style.height = CH+'px';
+  ctx.scale(2,2);
+
+  let startTs = null;
+  let langIdx = [0,0,0];
+  let langNext = [0, 1400, 2800];
+  let phaseNext = 0;
+  let phaseI = 0;
+
+  function ease(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+
+  function drawChart(pts){
+    ctx.clearRect(0,0,CW,CH);
+    if(pts.length<2) return;
+    const pl=4,pr=4,pt=8,pb=14;
+    const cw=CW-pl-pr, ch=CH-pt-pb;
+    const mn=Math.min(...pts), mx=Math.max(...pts)+0.001;
+    const xs=pts.map((_,i)=>pl+(i/(pts.length-1))*cw);
+    const ys=pts.map(v=>pt+ch-((v-mn)/(mx-mn))*ch);
+
+    ctx.beginPath(); ctx.moveTo(xs[0],ys[0]);
+    for(let i=1;i<pts.length;i++){
+      const cx=(xs[i-1]+xs[i])/2;
+      ctx.bezierCurveTo(cx,ys[i-1],cx,ys[i],xs[i],ys[i]);
+    }
+    ctx.strokeStyle='rgba(0,220,160,0.82)'; ctx.lineWidth=1.5; ctx.stroke();
+
+    const lx=xs[xs.length-1], ly=ys[ys.length-1];
+    ctx.beginPath(); ctx.arc(lx,ly,3,0,Math.PI*2);
+    ctx.fillStyle='#00dc9f'; ctx.fill();
+    ctx.beginPath(); ctx.arc(lx,ly,5+1.5*Math.sin(Date.now()*0.007),0,Math.PI*2);
+    ctx.strokeStyle='rgba(0,220,160,0.22)'; ctx.lineWidth=1; ctx.stroke();
+
+    ctx.beginPath(); ctx.moveTo(xs[0],ys[0]);
+    for(let i=1;i<pts.length;i++){
+      const cx=(xs[i-1]+xs[i])/2;
+      ctx.bezierCurveTo(cx,ys[i-1],cx,ys[i],xs[i],ys[i]);
+    }
+    ctx.lineTo(xs[xs.length-1],CH-pb); ctx.lineTo(xs[0],CH-pb); ctx.closePath();
+    ctx.fillStyle='rgba(0,220,160,0.07)'; ctx.fill();
+  }
+
+  function tick(ts){
+    if(!startTs) startTs=ts;
+    const elapsed = ts - startTs;
+    const raw = Math.min(elapsed / DURATION, 1);
+    const progress = ease(raw);
+    const pct = Math.round(progress*100);
+
+    document.getElementById('alPctLbl').textContent = pct+'%';
+    document.getElementById('alStatusPct').textContent = pct+'%';
+
+    if(elapsed - phaseNext > 600){
+      phaseNext = elapsed; phaseI=(phaseI+1)%phases.length;
+      document.getElementById('alStatusTxt').textContent = phases[phaseI];
+    }
+
+    for(let i=0;i<3;i++){
+      if(elapsed - langNext[i] > 1800+i*250){
+        langNext[i]=elapsed; langIdx[i]=1-langIdx[i];
+        const el=document.getElementById('alLbl'+i);
+        el.style.opacity='0';
+        const cap=kpiDefs[i].labels[langIdx[i]];
+        setTimeout(()=>{ document.getElementById('alLbl'+i).textContent=cap; document.getElementById('alLbl'+i).style.opacity='1'; },180);
+      }
+      const v=lerp(0,kpiDefs[i].target,progress);
+      document.getElementById('alVal'+i).textContent=kpiDefs[i].format(v);
+      const active=progress>i*0.22;
+      document.getElementById('alDot'+i).classList.toggle('live',active);
+      document.getElementById('alKpi'+i).classList.toggle('pulse',active&&pct<99);
+    }
+
+    const ptCount=Math.floor(progress*54)+2;
+    const pts=[];
+    for(let i=0;i<ptCount;i++){
+      const t=i/(ptCount-1);
+      const base=t*t*0.82+t*0.12;
+      const noise=Math.sin(t*17+elapsed*0.0007)*0.035+Math.sin(t*6)*0.018;
+      pts.push(Math.max(0,Math.min(1,base+noise)));
+    }
+    drawChart(pts);
+
+    if(raw < 1){
+      requestAnimationFrame(tick);
+    } else {
+      // Cerrar loader
+      setTimeout(()=>{
+        const loader=document.getElementById('arkos-loader');
+        loader.classList.add('done');
+        setTimeout(()=>loader.remove(), 650);
+      }, 300);
+    }
+  }
+
+  requestAnimationFrame(tick);
+})();
+
+</script>
+</body>
+</html>
