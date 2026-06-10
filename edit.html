@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erick Dorado — Portfolio [EDIT]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  width: 100%; min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: #e0e6f0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 105%, rgba(0,212,180,0.55) 0%, rgba(0,180,150,0.18) 35%, transparent 65%),
+    linear-gradient(to top, #0a1a18 0%, #111823 40%, #0d1320 100%);
+  background-attachment: fixed;
+}
+
+/* ===================== EDIT MODE BADGE ===================== */
+#edit-badge {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 9999;
+  background: rgba(255,160,50,0.12);
+  border: 1px solid rgba(255,160,50,0.35);
+  border-radius: 20px;
+  padding: 6px 18px 6px 12px;
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,160,50,0.9);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+#edit-badge::before {
+  content: '';
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #ffa032;
+  box-shadow: 0 0 8px #ffa032;
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ===================== ARKOS LOADER ===================== */
+#arkos-loader {
+  position: fixed; inset: 0; z-index: 9000;
+  background: #04080f;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+  font-family: 'Space Grotesk', sans-serif;
+  overflow: hidden;
+}
+#arkos-loader.done { animation: loaderFadeOut 0.6s ease forwards; }
+@keyframes loaderFadeOut { to { opacity: 0; pointer-events: none; } }
+
+.al-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,220,160,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,220,160,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.al-glow {
+  position: absolute;
+  width: 500px; height: 260px;
+  background: radial-gradient(ellipse, rgba(0,220,160,0.08) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.al-corner { position: absolute; width: 20px; height: 20px; pointer-events: none; }
+.al-corner.tl { top: 16px; left: 16px; border-top: 1px solid rgba(0,220,160,0.28); border-left: 1px solid rgba(0,220,160,0.28); }
+.al-corner.tr { top: 16px; right: 16px; border-top: 1px solid rgba(0,220,160,0.28); border-right: 1px solid rgba(0,220,160,0.28); }
+.al-corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid rgba(0,220,160,0.28); border-left: 1px solid rgba(0,220,160,0.28); }
+.al-corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid rgba(0,220,160,0.28); border-right: 1px solid rgba(0,220,160,0.28); }
+
+.al-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.38em; color: rgba(0,220,160,0.9);
+  text-transform: uppercase; margin-bottom: 0.3rem; position: relative;
+}
+.al-tagline {
+  font-size: 10.5px; letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+  margin-bottom: 2.6rem; position: relative;
+}
+.al-kpi-row { display: flex; gap: 1.2rem; margin-bottom: 2.4rem; position: relative; }
+.al-kpi {
+  background: rgba(255,255,255,0.03);
+  border: 0.5px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 0.9rem 1.3rem;
+  min-width: 148px; text-align: center; position: relative;
+  transition: border-color 0.4s;
+}
+.al-kpi.pulse { border-color: rgba(0,220,160,0.32); }
+.al-kpi-dot {
+  position: absolute; top: 9px; right: 9px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.12); transition: all 0.3s;
+}
+.al-kpi-dot.live { background: #00dc9f; box-shadow: 0 0 6px #00dc9f; }
+.al-kpi-label {
+  font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.28); margin-bottom: 0.4rem;
+  min-height: 13px; transition: opacity 0.22s;
+}
+.al-kpi-value {
+  font-family: 'Space Mono', monospace;
+  font-size: 21px; font-weight: 700;
+  color: rgba(255,255,255,0.9); letter-spacing: -0.02em; line-height: 1;
+}
+.al-kpi-unit { font-size: 10px; color: rgba(0,220,160,0.65); margin-top: 0.28rem; letter-spacing: 0.07em; }
+.al-chart-wrap { width: 100%; max-width: 500px; position: relative; margin-bottom: 1.6rem; }
+.al-chart-toprow { display: flex; justify-content: space-between; margin-bottom: 0.35rem; padding: 0 2px; }
+.al-chart-lbl { font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+.al-chart-pct { font-size: 9.5px; letter-spacing: 0.1em; color: rgba(0,220,160,0.65); font-family: 'Space Mono', monospace; }
+#alChart { display: block; width: 100%; border-radius: 5px; }
+.al-status-row { display: flex; align-items: center; gap: 9px; position: relative; }
+.al-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #00dc9f; flex-shrink: 0; }
+.al-status-txt { font-size: 10.5px; letter-spacing: 0.14em; color: rgba(255,255,255,0.3); text-transform: uppercase; font-family: 'Space Mono', monospace; }
+.al-status-pct { font-size: 10.5px; color: rgba(0,220,160,0.75); font-family: 'Space Mono', monospace; margin-left: 5px; }
+
+/* ===================== PORTFOLIO LAYOUT ===================== */
+.page-wrap {
+  padding: 1.5rem;
+  padding-top: 4rem; /* espacio para el badge */
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.1rem;
+  align-items: stretch;
+}
+
+.panel {
+  position: relative;
+  border-radius: 22px;
+  background: rgba(22, 28, 42, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.06) inset,
+    0 -1px 0 rgba(0,0,0,0.4) inset,
+    0 8px 32px rgba(0,0,0,0.55),
+    0 2px 8px rgba(0,0,0,0.3),
+    0 0 0 1px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+.panel::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  border-radius: 22px 22px 0 0;
+  z-index: 1; pointer-events: none;
+}
+
+/* ===== EDITABLE TEXT ===== */
+.editable {
+  position: relative;
+  cursor: text;
+  border-radius: 6px;
+  transition: background 0.15s, outline 0.15s;
+  outline: 1.5px dashed transparent;
+}
+.editable:hover {
+  outline: 1.5px dashed rgba(255,160,50,0.45);
+  background: rgba(255,160,50,0.05);
+}
+.editable:focus {
+  outline: 1.5px solid rgba(255,160,50,0.7);
+  background: rgba(255,160,50,0.07);
+}
+.editable[contenteditable="true"] { min-width: 20px; }
+
+/* ===== HERO ===== */
+.hero {
+  grid-column: 1; grid-row: 1;
+  padding: 2.6rem 14rem 2.4rem 2.6rem;
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 52vh;
+}
+.hero-hello { font-size: 0.85rem; font-weight: 400; color: #7a8499; margin-bottom: 0.2rem; }
+.hero-name { font-size: clamp(1.7rem, 2.6vw, 2.7rem); font-weight: 800; line-height: 1.1; margin-bottom: 0.3rem; color: #e8eef8; }
+.hero-role { font-size: clamp(0.82rem, 1.3vw, 1.05rem); font-weight: 600; margin-bottom: 0.85rem; color: #7a8499; }
+.hero-role span { color: #00d4b4; font-weight: 700; }
+.hero-desc { font-size: 0.74rem; line-height: 1.8; color: #7a8499; max-width: 300px; margin-bottom: 1.2rem; }
+.hero-socials { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; }
+.social-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #7a8499;
+  text-decoration: none; transition: all 0.2s; cursor: pointer;
+}
+.social-btn:hover { background: #00d4b4; color: #0d1320; border-color: #00d4b4; }
+
+/* ===== CV UPLOAD BTN ===== */
+.cv-upload-wrap { position: relative; width: fit-content; }
+.hero-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #ffa032; color: #0d1320;
+  font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 700;
+  padding: 0.5rem 1.5rem; text-decoration: none; border-radius: 20px;
+  width: fit-content; transition: all 0.2s; cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 16px rgba(255,160,50,0.3);
+}
+.hero-btn:hover { background: #ffb84d; box-shadow: 0 6px 24px rgba(255,160,50,0.45); }
+.hero-btn.has-cv { background: #00d4b4; color: #0d1320; box-shadow: 0 4px 16px rgba(0,212,180,0.28); }
+.hero-btn.has-cv:hover { background: #00f0ce; }
+.cv-filename {
+  margin-top: 0.35rem;
+  font-size: 0.64rem; color: rgba(0,212,180,0.7);
+  font-family: 'Space Mono', monospace; letter-spacing: 0.04em;
+  display: none;
+}
+.cv-filename.visible { display: block; }
+#cvFileInput { display: none; }
+
+/* Hexágono hero */
+.hex-container {
+  position: absolute;
+  right: 1.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+.hex-photo {
+  width: 190px; height: 219px; position: relative;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.hex-photo svg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  filter: drop-shadow(0 0 20px rgba(0,212,180,0.5)) drop-shadow(0 0 6px rgba(0,212,180,0.25));
+}
+.hex-img-fill {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  clip-path: polygon(50% 2%, 98% 26%, 98% 74%, 50% 98%, 2% 74%, 2% 26%);
+  object-fit: cover; z-index: 2;
+}
+.hex-initials { font-size: 2.8rem; font-weight: 800; color: #00d4b4; position: relative; z-index: 3; letter-spacing: -0.02em; text-shadow: 0 0 18px rgba(0,212,180,0.35); }
+.hex-upload-hint {
+  position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,212,180,0.9); color: #0d1320;
+  font-size: 9px; font-weight: 700; padding: 2px 9px; border-radius: 10px;
+  white-space: nowrap; z-index: 6; opacity: 0; transition: opacity 0.2s;
+  pointer-events: none;
+}
+.hex-photo:hover .hex-upload-hint,
+.about-hex-wrap:hover .hex-upload-hint { opacity: 1; }
+input.hex-file-input { display: none; }
+
+/* ===== ABOUT ===== */
+.about {
+  grid-column: 1; grid-row: 2;
+  padding: 2rem 2.2rem 2rem 2.4rem;
+  display: flex; align-items: center; gap: 0;
+  overflow: visible !important;
+}
+.about-hex-zone {
+  flex-shrink: 0; width: 140px; position: relative;
+  margin-left: -18px; margin-right: 1.2rem;
+  align-self: stretch; display: flex; align-items: center;
+}
+.about-hex-wrap {
+  width: 140px; height: 161px; position: relative;
+  display: flex; align-items: flex-end; justify-content: center;
+  cursor: pointer;
+}
+.about-hex-wrap svg {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  filter: drop-shadow(0 0 14px rgba(0,212,180,0.4)); z-index: 1;
+}
+.about-hex-img {
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 130%; max-width: none;
+  object-fit: cover; object-position: top; z-index: 3;
+}
+.about-initials { font-size: 2rem; font-weight: 800; color: #00d4b4; position: relative; z-index: 4; margin-bottom: 1rem; }
+.about-text { flex: 1; }
+.about-title { font-size: clamp(1.1rem, 1.7vw, 1.5rem); font-weight: 700; margin-bottom: 0.15rem; }
+.about-title span { color: #00d4b4; }
+.about-sub { font-size: 0.76rem; font-weight: 500; color: #00d4b4; margin-bottom: 0.6rem; }
+.about-desc { font-size: 0.71rem; line-height: 1.8; color: #7a8499; max-width: 340px; margin-bottom: 0.85rem; }
+.about-desc strong { color: #b0bac8; font-weight: 600; }
+.about-btn {
+  display: inline-block; background: #00d4b4; color: #0d1320;
+  font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 700;
+  padding: 0.45rem 1.2rem; text-decoration: none; border-radius: 20px;
+  transition: all 0.2s; box-shadow: 0 3px 12px rgba(0,212,180,0.22);
+}
+.about-btn:hover { background: #00f0ce; }
+
+/* ===== COLUMNA DERECHA ===== */
+.right-col {
+  grid-column: 2; grid-row: 1 / 3;
+  display: flex; flex-direction: column; gap: 1.1rem;
+}
+
+/* ===== SKILLS ===== */
+.services-panel { flex: 0 0 auto; padding: 1.6rem 2rem 1.5rem; }
+.panel-heading { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.85rem; color: #e8eef8; }
+.panel-heading span { color: #00d4b4; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+.service-card {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 0.85rem 0.75rem; transition: all 0.25s;
+  position: relative; cursor: pointer;
+}
+.service-card:hover {
+  background: rgba(0,212,180,0.08); border-color: rgba(0,212,180,0.28);
+  transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+.service-icon {
+  font-size: 1.2rem; margin-bottom: 0.3rem;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; border-radius: 8px; overflow: hidden;
+  cursor: pointer;
+}
+.service-icon img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; border-radius: 8px; z-index: 2;
+}
+.service-icon-hint {
+  display: none;
+  position: absolute; inset: 0;
+  background: rgba(255,160,50,0.85); border-radius: 8px;
+  font-size: 9px; font-weight: 700; color: #0d1320;
+  align-items: center; justify-content: center; z-index: 3;
+  text-align: center; line-height: 1.2; padding: 2px;
+}
+.service-icon:hover .service-icon-hint { display: flex; }
+.service-name { font-size: 0.67rem; font-weight: 600; color: #c8d0de; margin-bottom: 0.2rem; }
+.service-desc { font-size: 0.58rem; line-height: 1.5; color: #505a6e; }
+.skill-img-input { display: none; }
+
+/* ===== PROJECTS ===== */
+.projects-panel {
+  flex: 1 1 auto; padding: 1.4rem 2rem;
+  display: flex; flex-direction: column; min-height: 280px;
+}
+.gallery-scroll { flex: 1 1 auto; overflow-y: auto; padding-right: 2px; }
+.gallery-scroll::-webkit-scrollbar { width: 3px; }
+.gallery-scroll::-webkit-scrollbar-track { background: transparent; }
+.gallery-scroll::-webkit-scrollbar-thumb { background: rgba(0,212,180,0.2); border-radius: 2px; }
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; }
+.proj-card {
+  border-radius: 12px; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07); aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 0.25rem;
+  transition: all 0.25s; cursor: pointer; padding: 0.6rem;
+  position: relative; overflow: hidden;
+}
+.proj-card:hover { border-color: rgba(0,212,180,0.35); transform: scale(1.04); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+.proj-card-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 1; border-radius: 12px;
+  display: none;
+}
+.proj-card-img.visible { display: block; }
+.proj-card-overlay {
+  position: absolute; inset: 0; border-radius: 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 40%, transparent);
+  z-index: 2; display: none;
+}
+.proj-card-img.visible ~ .proj-card-overlay { display: block; }
+.proj-emoji { font-size: 1.4rem; position: relative; z-index: 3; }
+.proj-label { font-size: 0.58rem; font-weight: 600; color: #c0c8d8; text-align: center; line-height: 1.3; position: relative; z-index: 3; }
+.proj-badge {
+  position: absolute; top: 6px; right: 6px;
+  font-size: 6.5px; font-weight: 700; letter-spacing: 0.05em;
+  padding: 2px 5px; border-radius: 8px; text-transform: uppercase; z-index: 4;
+}
+.badge-done { background: rgba(0,212,180,0.2); color: #00d4b4; }
+.badge-wip { background: rgba(247,140,108,0.2); color: #f78c6c; }
+.badge-idea { background: rgba(255,255,255,0.08); color: #6a7589; }
+.proj-upload-hint {
+  position: absolute; inset: 0; border-radius: 12px;
+  background: rgba(255,160,50,0.12);
+  border: 1.5px dashed rgba(255,160,50,0.4);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; opacity: 0; transition: opacity 0.18s; z-index: 5;
+  font-size: 9px; font-weight: 700; color: rgba(255,160,50,0.9);
+}
+.proj-card:hover .proj-upload-hint { opacity: 1; }
+.proj-img-input { display: none; }
+
+/* ===== BADGE STATUS ===== */
+.proj-badge-select {
+  position: absolute; top: 4px; left: 4px; z-index: 6;
+  background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.1);
+  color: #e0e6f0; font-size: 7px; font-weight: 700;
+  border-radius: 6px; padding: 1px 4px; cursor: pointer;
+  font-family: 'Poppins', sans-serif; letter-spacing: 0.04em;
+  display: none;
+}
+.proj-card:hover .proj-badge-select { display: block; }
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 720px) {
+  .page-wrap { grid-template-columns: 1fr; grid-template-rows: auto; padding: 1rem; padding-top: 4rem; gap: 1rem; }
+  .hero { grid-column: 1; grid-row: 1; min-height: auto; padding: 2rem 1.5rem 2rem; flex-direction: column; align-items: flex-start; }
+  .about { grid-column: 1; grid-row: 2; }
+  .right-col { grid-column: 1; grid-row: 3; }
+  .hex-container { position: static !important; transform: none !important; margin: 0 auto 1.4rem; display: flex; justify-content: center; }
+  .hex-photo { width: 150px; height: 173px; }
+  .about { flex-direction: column; align-items: center; text-align: center; padding: 2rem 1.5rem 1.8rem; gap: 1.2rem; }
+  .about-hex-zone { width: auto; margin: 0; align-self: auto; }
+  .about-text { width: 100%; }
+  .about-desc { max-width: 100%; }
+  .projects-panel { min-height: auto; }
+  .gallery-scroll { overflow-y: visible; max-height: none; }
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .proj-card { aspect-ratio: 1/1; }
+  .services-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .service-card { padding: 0.7rem 0.6rem; }
+  .al-kpi-row { gap: 0.7rem; }
+  .al-kpi { min-width: 110px; padding: 0.75rem 0.9rem; }
+  .al-kpi-value { font-size: 16px; }
+}
+@media (max-width: 440px) {
+  .page-wrap { padding: 0.75rem; padding-top: 4rem; gap: 0.75rem; }
+  .hero-name { font-size: 1.65rem; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .al-kpi-row { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- EDIT MODE BADGE -->
+<div id="edit-badge">Modo Edición</div>
+
+<!-- ===================== ARKOS LOADER ===================== -->
+<div id="arkos-loader">
+  <div class="al-grid"></div>
+  <div class="al-glow"></div>
+  <div class="al-corner tl"></div>
+  <div class="al-corner tr"></div>
+  <div class="al-corner bl"></div>
+  <div class="al-corner br"></div>
+
+  <div class="al-logo">ARKOS</div>
+  <div class="al-tagline">Synchronizing business intelligence</div>
+
+  <div class="al-kpi-row">
+    <div class="al-kpi" id="alKpi0">
+      <div class="al-kpi-dot live" id="alDot0"></div>
+      <div class="al-kpi-label" id="alLbl0">Revenue</div>
+      <div class="al-kpi-value" id="alVal0">$0</div>
+      <div class="al-kpi-unit">YTD</div>
+    </div>
+    <div class="al-kpi" id="alKpi1">
+      <div class="al-kpi-dot" id="alDot1"></div>
+      <div class="al-kpi-label" id="alLbl1">Clients</div>
+      <div class="al-kpi-value" id="alVal1">0</div>
+      <div class="al-kpi-unit">Active</div>
+    </div>
+    <div class="al-kpi" id="alKpi2">
+      <div class="al-kpi-dot" id="alDot2"></div>
+      <div class="al-kpi-label" id="alLbl2">Reviews</div>
+      <div class="al-kpi-value" id="alVal2">0.00</div>
+      <div class="al-kpi-unit">Avg ★</div>
+    </div>
+  </div>
+
+  <div class="al-chart-wrap">
+    <div class="al-chart-toprow">
+      <span class="al-chart-lbl">Sync progress</span>
+      <span class="al-chart-pct" id="alPctLbl">0%</span>
+    </div>
+    <canvas id="alChart" width="500" height="76"></canvas>
+  </div>
+
+  <div class="al-status-row">
+    <div class="al-status-dot"></div>
+    <span class="al-status-txt" id="alStatusTxt">Connecting to data streams</span>
+    <span class="al-status-pct" id="alStatusPct">—</span>
+  </div>
+</div>
+
+<!-- ===================== PORTFOLIO ===================== -->
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="panel hero">
+    <div class="hero-hello editable" contenteditable="true">Hola, soy</div>
+    <div class="hero-name editable" contenteditable="true">Erick Dorado</div>
+    <div class="hero-role">Y soy un <span class="editable" contenteditable="true">Systems Builder</span></div>
+    <p class="hero-desc editable" contenteditable="true">Construyo sistemas en el cruce entre datos, software y negocio. Analytics · SaaS · IA Aplicada · Diseño Web.</p>
+    <div class="hero-socials">
+      <a href="https://linkedin.com/in/erick-emmanuel-dorado" target="_blank" class="social-btn">in</a>
+      <a href="https://github.com/ErickDorado" target="_blank" class="social-btn">gh</a>
+      <a href="mailto:erickemmanueldorado@gmail.com" class="social-btn">@</a>
+      <a href="https://wa.me/+5492932413717" target="_blank" class="social-btn">wa</a>
+    </div>
+
+    <!-- CV UPLOAD -->
+    <div class="cv-upload-wrap">
+      <button class="hero-btn" id="cvBtn" onclick="document.getElementById('cvFileInput').click()">
+        📎 Cargar CV
+      </button>
+      <div class="cv-filename" id="cvFilename"></div>
+      <input type="file" accept=".pdf,.doc,.docx" id="cvFileInput">
+    </div>
+
+    <!-- Hexágono hero -->
+    <div class="hex-container">
+      <div class="hex-photo" id="heroHex" title="Click para subir foto">
+        <svg viewBox="0 0 190 219" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="95,4 186,51 186,168 95,215 4,168 4,51"
+            fill="rgba(0,212,180,0.07)" stroke="#00d4b4" stroke-width="1.8"/>
+        </svg>
+        <img class="hex-img-fill" id="heroImg" src="" alt="" style="display:none;">
+        <div class="hex-initials" id="heroInitials">ED</div>
+        <span class="hex-upload-hint">📷 Subir foto</span>
+        <input type="file" accept="image/*" class="hex-file-input" id="heroFileInput">
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="panel about">
+    <div class="about-hex-zone">
+      <div class="about-hex-wrap" id="aboutHex" title="Click para subir foto">
+        <svg viewBox="0 0 140 161" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="70,4 136,38 136,123 70,157 4,123 4,38"
+            fill="rgba(0,212,180,0.07)" stroke="#00d4b4" stroke-width="1.5"/>
+        </svg>
+        <img class="about-hex-img" id="aboutImg" src="" alt="" style="display:none;">
+        <div class="about-initials" id="aboutInitials">ED</div>
+        <span class="hex-upload-hint">📷 Subir foto</span>
+        <input type="file" accept="image/*" class="hex-file-input" id="aboutFileInput">
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="about-title">About <span class="editable" contenteditable="true">Me</span></div>
+      <div class="about-sub editable" contenteditable="true">Systems Builder</div>
+      <p class="about-desc editable" contenteditable="true">Soy Erick, de Punta Alta, Buenos Aires. Estudié Logística y construyo SaaS, analizo datos y diseño webs. Mi diferencial es cruzar disciplinas: datos, operaciones y producto en un solo sistema.</p>
+      <a href="#" class="about-btn">Leer más</a>
+    </div>
+  </div>
+
+  <!-- COLUMNA DERECHA -->
+  <div class="right-col">
+    <div class="panel services-panel">
+      <div class="panel-heading">Mis <span class="editable" contenteditable="true">Skills</span></div>
+      <div class="services-grid">
+
+        <!-- SKILL 1 -->
+        <div class="service-card">
+          <div class="service-icon" onclick="triggerSkillImg(this)" title="Click para subir imagen">
+            <span class="skill-emoji">📊</span>
+            <img class="skill-img" src="" alt="" style="display:none;">
+            <div class="service-icon-hint">📷</div>
+            <input type="file" accept="image/*" class="skill-img-input">
+          </div>
+          <div class="service-name editable" contenteditable="true">Data Analytics</div>
+          <div class="service-desc editable" contenteditable="true">Pipelines ETL, SQL, Power BI y dashboards ejecutivos.</div>
+        </div>
+
+        <!-- SKILL 2 -->
+        <div class="service-card">
+          <div class="service-icon" onclick="triggerSkillImg(this)" title="Click para subir imagen">
+            <span class="skill-emoji">🚀</span>
+            <img class="skill-img" src="" alt="" style="display:none;">
+            <div class="service-icon-hint">📷</div>
+            <input type="file" accept="image/*" class="skill-img-input">
+          </div>
+          <div class="service-name editable" contenteditable="true">SaaS Dev</div>
+          <div class="service-desc editable" contenteditable="true">Productos web para PyMEs: facturación y automatizaciones.</div>
+        </div>
+
+        <!-- SKILL 3 -->
+        <div class="service-card">
+          <div class="service-icon" onclick="triggerSkillImg(this)" title="Click para subir imagen">
+            <span class="skill-emoji">🤖</span>
+            <img class="skill-img" src="" alt="" style="display:none;">
+            <div class="service-icon-hint">📷</div>
+            <input type="file" accept="image/*" class="skill-img-input">
+          </div>
+          <div class="service-name editable" contenteditable="true">IA Aplicada</div>
+          <div class="service-desc editable" contenteditable="true">Bots, reportes automáticos y herramientas de IA real.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel projects-panel">
+      <div class="panel-heading">Latest <span class="editable" contenteditable="true">Project</span></div>
+      <div class="gallery-scroll">
+        <div class="projects-grid">
+
+          <!-- PROYECTO 1 -->
+          <div class="proj-card" onclick="triggerProjImg(this)">
+            <img class="proj-card-img" src="" alt="">
+            <div class="proj-card-overlay"></div>
+            <div class="proj-badge badge-done editable" contenteditable="true">Listo</div>
+            <div class="proj-emoji">📦</div>
+            <div class="proj-label editable" contenteditable="true">Pipeline Logístico</div>
+            <div class="proj-upload-hint">📷<br>Subir imagen</div>
+            <input type="file" accept="image/*" class="proj-img-input">
+            <select class="proj-badge-select" onchange="changeBadge(this)" onclick="event.stopPropagation()">
+              <option value="done">Listo</option>
+              <option value="wip">En dev</option>
+              <option value="idea">Idea</option>
+              <option value="published">Publicado</option>
+            </select>
+          </div>
+
+          <!-- PROYECTO 2 -->
+          <div class="proj-card" onclick="triggerProjImg(this)">
+            <img class="proj-card-img" src="" alt="">
+            <div class="proj-card-overlay"></div>
+            <div class="proj-badge badge-wip editable" contenteditable="true">En dev</div>
+            <div class="proj-emoji">🦷</div>
+            <div class="proj-label editable" contenteditable="true">DentalOS</div>
+            <div class="proj-upload-hint">📷<br>Subir imagen</div>
+            <input type="file" accept="image/*" class="proj-img-input">
+            <select class="proj-badge-select" onchange="changeBadge(this)" onclick="event.stopPropagation()">
+              <option value="done">Listo</option>
+              <option value="wip" selected>En dev</option>
+              <option value="idea">Idea</option>
+              <option value="published">Publicado</option>
+            </select>
+          </div>
+
+          <!-- PROYECTO 3 -->
+          <div class="proj-card" onclick="triggerProjImg(this)">
+            <img class="proj-card-img" src="" alt="">
+            <div class="proj-card-overlay"></div>
+            <div class="proj-badge badge-wip editable" contenteditable="true">En dev</div>
+            <div class="proj-emoji">💳</div>
+            <div class="proj-label editable" contenteditable="true">DebtOS</div>
+            <div class="proj-upload-hint">📷<br>Subir imagen</div>
+            <input type="file" accept="image/*" class="proj-img-input">
+            <select class="proj-badge-select" onchange="changeBadge(this)" onclick="event.stopPropagation()">
+              <option value="done">Listo</option>
+              <option value="wip" selected>En dev</option>
+              <option value="idea">Idea</option>
+              <option value="published">Publicado</option>
+            </select>
+          </div>
+
+          <!-- PROYECTO 4 -->
+          <div class="proj-card" onclick="triggerProjImg(this)">
+            <img class="proj-card-img" src="" alt="">
+            <div class="proj-card-overlay"></div>
+            <div class="proj-badge badge-idea editable" contenteditable="true">Idea</div>
+            <div class="proj-emoji">🗺️</div>
+            <div class="proj-label editable" contenteditable="true">MapOS</div>
+            <div class="proj-upload-hint">📷<br>Subir imagen</div>
+            <input type="file" accept="image/*" class="proj-img-input">
+            <select class="proj-badge-select" onchange="changeBadge(this)" onclick="event.stopPropagation()">
+              <option value="done">Listo</option>
+              <option value="wip">En dev</option>
+              <option value="idea" selected>Idea</option>
+              <option value="published">Publicado</option>
+            </select>
+          </div>
+
+          <!-- PROYECTO 5 -->
+          <div class="proj-card" onclick="triggerProjImg(this)">
+            <img class="proj-card-img" src="" alt="">
+            <div class="proj-card-overlay"></div>
+            <div class="proj-badge badge-done editable" contenteditable="true">Publicado</div>
+            <div class="proj-emoji">📖</div>
+            <div class="proj-label editable" contenteditable="true">Los Tres Pilares</div>
+            <div class="proj-upload-hint">📷<br>Subir imagen</div>
+            <input type="file" accept="image/*" class="proj-img-input">
+            <select class="proj-badge-select" onchange="changeBadge(this)" onclick="event.stopPropagation()">
+              <option value="done" selected>Publicado</option>
+              <option value="wip">En dev</option>
+              <option value="idea">Idea</option>
+              <option value="published">Publicado</option>
+            </select>
+          </div>
+
+          <!-- SLOT VACÍO -->
+          <div class="proj-card" style="opacity:0.3; border-style:dashed;" onclick="triggerProjImg(this)">
+            <img class="proj-card-img" src="" alt="">
+            <div class="proj-card-overlay"></div>
+            <div class="proj-emoji" style="color:rgba(255,255,255,0.12)">+</div>
+            <div class="proj-label editable" contenteditable="true" style="color:#3a4456;">Próximamente</div>
+            <div class="proj-upload-hint">📷<br>Subir imagen</div>
+            <input type="file" accept="image/*" class="proj-img-input">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===================== ARKOS LOADER ===================== */
+(function(){
+  const kpiDefs = [
+    { labels:['Revenue','Ganancias'], target:2847500, format: v => '$'+(v>=1e6?(v/1e6).toFixed(2)+'M':Math.round(v).toLocaleString()), unit:'YTD' },
+    { labels:['Clients','Clientes'],  target:1342,    format: v => Math.round(v).toLocaleString(), unit:'Active' },
+    { labels:['Reviews','Reseñas'],   target:4.87,    format: v => v.toFixed(2), unit:'Avg ★' }
+  ];
+  const phases = ['Connecting to data streams','Fetching revenue records','Syncing client database','Loading review analytics','Calibrating KPI engine','Validating data integrity','Rendering dashboards','Finalizing sync'];
+  const DURATION = 5000;
+
+  const canvas = document.getElementById('alChart');
+  const ctx = canvas.getContext('2d');
+  const CW = 500, CH = 76;
+  canvas.width = CW*2; canvas.height = CH*2;
+  canvas.style.width = CW+'px'; canvas.style.height = CH+'px';
+  ctx.scale(2,2);
+
+  let startTs = null, langIdx=[0,0,0], langNext=[0,1400,2800], phaseNext=0, phaseI=0;
+  function ease(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+
+  function drawChart(pts){
+    ctx.clearRect(0,0,CW,CH);
+    if(pts.length<2) return;
+    const pl=4,pr=4,pt=8,pb=14;
+    const cw=CW-pl-pr, ch=CH-pt-pb;
+    const mn=Math.min(...pts), mx=Math.max(...pts)+0.001;
+    const xs=pts.map((_,i)=>pl+(i/(pts.length-1))*cw);
+    const ys=pts.map(v=>pt+ch-((v-mn)/(mx-mn))*ch);
+    ctx.beginPath(); ctx.moveTo(xs[0],ys[0]);
+    for(let i=1;i<pts.length;i++){ const cx=(xs[i-1]+xs[i])/2; ctx.bezierCurveTo(cx,ys[i-1],cx,ys[i],xs[i],ys[i]); }
+    ctx.strokeStyle='rgba(0,220,160,0.82)'; ctx.lineWidth=1.5; ctx.stroke();
+    const lx=xs[xs.length-1], ly=ys[ys.length-1];
+    ctx.beginPath(); ctx.arc(lx,ly,3,0,Math.PI*2); ctx.fillStyle='#00dc9f'; ctx.fill();
+    ctx.beginPath(); ctx.arc(lx,ly,5+1.5*Math.sin(Date.now()*0.007),0,Math.PI*2);
+    ctx.strokeStyle='rgba(0,220,160,0.22)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(xs[0],ys[0]);
+    for(let i=1;i<pts.length;i++){ const cx=(xs[i-1]+xs[i])/2; ctx.bezierCurveTo(cx,ys[i-1],cx,ys[i],xs[i],ys[i]); }
+    ctx.lineTo(xs[xs.length-1],CH-pb); ctx.lineTo(xs[0],CH-pb); ctx.closePath();
+    ctx.fillStyle='rgba(0,220,160,0.07)'; ctx.fill();
+  }
+
+  function tick(ts){
+    if(!startTs) startTs=ts;
+    const elapsed=ts-startTs, raw=Math.min(elapsed/DURATION,1), progress=ease(raw), pct=Math.round(progress*100);
+    document.getElementById('alPctLbl').textContent=pct+'%';
+    document.getElementById('alStatusPct').textContent=pct+'%';
+    if(elapsed-phaseNext>600){ phaseNext=elapsed; phaseI=(phaseI+1)%phases.length; document.getElementById('alStatusTxt').textContent=phases[phaseI]; }
+    for(let i=0;i<3;i++){
+      if(elapsed-langNext[i]>1800+i*250){
+        langNext[i]=elapsed; langIdx[i]=1-langIdx[i];
+        const el=document.getElementById('alLbl'+i); el.style.opacity='0';
+        const cap=kpiDefs[i].labels[langIdx[i]];
+        setTimeout(()=>{ document.getElementById('alLbl'+i).textContent=cap; document.getElementById('alLbl'+i).style.opacity='1'; },180);
+      }
+      const v=lerp(0,kpiDefs[i].target,progress);
+      document.getElementById('alVal'+i).textContent=kpiDefs[i].format(v);
+      const active=progress>i*0.22;
+      document.getElementById('alDot'+i).classList.toggle('live',active);
+      document.getElementById('alKpi'+i).classList.toggle('pulse',active&&pct<99);
+    }
+    const ptCount=Math.floor(progress*54)+2, pts=[];
+    for(let i=0;i<ptCount;i++){
+      const t=i/(ptCount-1), base=t*t*0.82+t*0.12;
+      const noise=Math.sin(t*17+elapsed*0.0007)*0.035+Math.sin(t*6)*0.018;
+      pts.push(Math.max(0,Math.min(1,base+noise)));
+    }
+    drawChart(pts);
+    if(raw<1){ requestAnimationFrame(tick); } else {
+      setTimeout(()=>{ const l=document.getElementById('arkos-loader'); l.classList.add('done'); setTimeout(()=>l.remove(),650); },300);
+    }
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ===================== HEX PHOTO UPLOAD ===================== */
+function setupHexUpload(hexEl, fileInputId, imgId, initialsId){
+  const fi=document.getElementById(fileInputId);
+  const img=document.getElementById(imgId);
+  const ini=document.getElementById(initialsId);
+  hexEl.addEventListener('click',()=>fi.click());
+  fi.addEventListener('change',e=>{
+    const file=e.target.files[0]; if(!file) return;
+    const r=new FileReader();
+    r.onload=ev=>{ img.src=ev.target.result; img.style.display='block'; if(ini) ini.style.display='none'; };
+    r.readAsDataURL(file);
+  });
+}
+setupHexUpload(document.getElementById('heroHex'),'heroFileInput','heroImg','heroInitials');
+setupHexUpload(document.getElementById('aboutHex'),'aboutFileInput','aboutImg','aboutInitials');
+
+/* ===================== CV UPLOAD ===================== */
+document.getElementById('cvFileInput').addEventListener('change', function(e){
+  const file = e.target.files[0]; if(!file) return;
+  const btn = document.getElementById('cvBtn');
+  const label = document.getElementById('cvFilename');
+  btn.classList.add('has-cv');
+  btn.innerHTML = '✅ CV Cargado';
+  label.textContent = file.name;
+  label.classList.add('visible');
+  // Guardar dataURL para exportar
+  const r = new FileReader();
+  r.onload = ev => { btn.dataset.cvData = ev.target.result; btn.dataset.cvName = file.name; };
+  r.readAsDataURL(file);
+});
+
+/* ===================== SKILL IMAGE UPLOAD ===================== */
+function triggerSkillImg(iconEl){
+  const input = iconEl.querySelector('.skill-img-input');
+  input.click();
+  input.addEventListener('change', function(e){
+    const file = e.target.files[0]; if(!file) return;
+    const img = iconEl.querySelector('.skill-img');
+    const emoji = iconEl.querySelector('.skill-emoji');
+    const r = new FileReader();
+    r.onload = ev => {
+      img.src = ev.target.result;
+      img.style.display = 'block';
+      if(emoji) emoji.style.display = 'none';
+    };
+    r.readAsDataURL(file);
+  }, { once: true });
+}
+
+/* ===================== PROJECT IMAGE UPLOAD ===================== */
+function triggerProjImg(cardEl){
+  // No disparar si click viene de editable o select
+  if(document.activeElement && document.activeElement.contentEditable === 'true') return;
+  const input = cardEl.querySelector('.proj-img-input');
+  input.click();
+  input.addEventListener('change', function(e){
+    const file = e.target.files[0]; if(!file) return;
+    const img = cardEl.querySelector('.proj-card-img');
+    const emoji = cardEl.querySelector('.proj-emoji');
+    const r = new FileReader();
+    r.onload = ev => {
+      img.src = ev.target.result;
+      img.classList.add('visible');
+      if(emoji) emoji.style.display = 'none';
+    };
+    r.readAsDataURL(file);
+  }, { once: true });
+}
+
+/* ===================== BADGE STATUS CHANGE ===================== */
+function changeBadge(selectEl){
+  const card = selectEl.closest('.proj-card');
+  const badge = card.querySelector('.proj-badge');
+  const map = {
+    done: { text:'Listo', cls:'badge-done' },
+    wip:  { text:'En dev', cls:'badge-wip' },
+    idea: { text:'Idea', cls:'badge-idea' },
+    published: { text:'Publicado', cls:'badge-done' }
+  };
+  const val = map[selectEl.value];
+  badge.textContent = val.text;
+  badge.className = 'proj-badge ' + val.cls + ' editable';
+  badge.contentEditable = 'true';
+}
+
+/* ===================== PREVENT ENTER IN EDITABLES ===================== */
+document.querySelectorAll('.editable').forEach(el => {
+  el.addEventListener('keydown', e => {
+    if(e.key === 'Enter'){ e.preventDefault(); el.blur(); }
+  });
+});
+</script>
+</body>
+</html>
