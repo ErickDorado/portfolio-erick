@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Erick Dorado — Portfolio [EDIT]</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- ===================== SUPABASE SDK ===================== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -434,9 +436,236 @@ input.hex-file-input { display: none; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .al-kpi-row { flex-wrap: wrap; justify-content: center; }
 }
+
+/* ===================== AUTH SCREENS ===================== */
+#auth-screen, #denied-screen {
+  position: fixed; inset: 0; z-index: 8500;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 105%, rgba(0,212,180,0.45) 0%, rgba(0,180,150,0.14) 35%, transparent 65%),
+    linear-gradient(to top, #0a1a18 0%, #111823 40%, #0d1320 100%);
+  font-family: 'Poppins', sans-serif;
+  padding: 2rem;
+}
+#auth-screen { display: none; }
+#denied-screen { display: none; }
+
+.auth-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,220,160,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,220,160,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.auth-corner { position: absolute; width: 20px; height: 20px; pointer-events: none; }
+.auth-corner.tl { top: 16px; left: 16px; border-top: 1px solid rgba(0,220,160,0.22); border-left: 1px solid rgba(0,220,160,0.22); }
+.auth-corner.tr { top: 16px; right: 16px; border-top: 1px solid rgba(0,220,160,0.22); border-right: 1px solid rgba(0,220,160,0.22); }
+.auth-corner.bl { bottom: 16px; left: 16px; border-bottom: 1px solid rgba(0,220,160,0.22); border-left: 1px solid rgba(0,220,160,0.22); }
+.auth-corner.br { bottom: 16px; right: 16px; border-bottom: 1px solid rgba(0,220,160,0.22); border-right: 1px solid rgba(0,220,160,0.22); }
+
+.auth-card {
+  position: relative;
+  background: rgba(22, 28, 42, 0.92);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 24px;
+  padding: 3rem 2.6rem 2.6rem;
+  max-width: 400px; width: 100%;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.06) inset,
+    0 -1px 0 rgba(0,0,0,0.4) inset,
+    0 24px 64px rgba(0,0,0,0.65),
+    0 0 0 1px rgba(0,0,0,0.3);
+  backdrop-filter: blur(24px);
+  text-align: center;
+}
+.auth-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+  border-radius: 24px 24px 0 0;
+}
+.auth-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 0.42em; text-transform: uppercase;
+  color: rgba(0,220,160,0.85); margin-bottom: 2rem;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.auth-logo::before {
+  content: '';
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #00dc9f; box-shadow: 0 0 8px #00dc9f;
+  animation: blink 1.4s ease-in-out infinite;
+}
+.auth-title {
+  font-size: 1.55rem; font-weight: 800; color: #e8eef8;
+  margin-bottom: 0.35rem; line-height: 1.2;
+}
+.auth-title span { color: #00d4b4; }
+.auth-subtitle {
+  font-size: 0.76rem; color: #7a8499; line-height: 1.7;
+  margin-bottom: 2.2rem;
+}
+.auth-divider {
+  height: 1px; background: rgba(255,255,255,0.07);
+  margin-bottom: 2rem; position: relative;
+}
+.auth-divider::after {
+  content: 'ACCESO RESTRINGIDO';
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  background: rgba(22,28,42,0.92); padding: 0 10px;
+  font-size: 9px; letter-spacing: 0.16em; color: rgba(255,255,255,0.18);
+  font-family: 'Space Mono', monospace;
+}
+
+.btn-google {
+  display: flex; align-items: center; justify-content: center; gap: 11px;
+  width: 100%; padding: 0.85rem 1.5rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 14px; cursor: pointer;
+  font-family: 'Poppins', sans-serif; font-size: 0.83rem; font-weight: 600;
+  color: #e0e6f0; transition: all 0.22s;
+  text-decoration: none;
+}
+.btn-google:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.btn-google:active { transform: translateY(0); }
+.btn-google svg { flex-shrink: 0; }
+.btn-google.loading { opacity: 0.6; pointer-events: none; }
+
+.auth-footer {
+  margin-top: 1.8rem;
+  font-size: 0.65rem; color: rgba(255,255,255,0.18);
+  font-family: 'Space Mono', monospace; letter-spacing: 0.05em;
+}
+
+/* ===== DENIED SCREEN ===== */
+.denied-icon {
+  font-size: 2.6rem; margin-bottom: 1rem;
+  animation: shake 0.5s ease 0.3s;
+}
+@keyframes shake {
+  0%,100%{ transform:translateX(0) }
+  20%{ transform:translateX(-6px) }
+  40%{ transform:translateX(6px) }
+  60%{ transform:translateX(-4px) }
+  80%{ transform:translateX(4px) }
+}
+.denied-title {
+  font-size: 1.4rem; font-weight: 800; color: #f78c6c;
+  margin-bottom: 0.35rem;
+}
+.denied-email {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px; padding: 0.4rem 0.9rem;
+  display: inline-block; margin: 0.7rem 0 1.5rem;
+}
+.denied-subtitle {
+  font-size: 0.75rem; color: #7a8499; line-height: 1.7;
+  margin-bottom: 1.8rem;
+}
+.btn-logout-denied {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.65rem 1.5rem;
+  background: rgba(247,140,108,0.1);
+  border: 1px solid rgba(247,140,108,0.3);
+  border-radius: 12px; cursor: pointer;
+  font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 600;
+  color: #f78c6c; transition: all 0.2s;
+}
+.btn-logout-denied:hover { background: rgba(247,140,108,0.18); transform: translateY(-1px); }
+
+/* ===== LOGOUT FLOATING BUTTON ===== */
+#logout-btn {
+  position: fixed; bottom: 22px; right: 22px; z-index: 9998;
+  display: none;
+  align-items: center; gap: 8px;
+  background: rgba(22, 28, 42, 0.92);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px; padding: 0.55rem 1.1rem 0.55rem 0.9rem;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif; font-size: 0.72rem; font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition: all 0.22s;
+}
+#logout-btn:hover {
+  border-color: rgba(247,140,108,0.4);
+  color: #f78c6c; background: rgba(247,140,108,0.08);
+  transform: translateY(-2px);
+}
+#logout-btn .logout-avatar {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(0,212,180,0.15);
+  border: 1px solid rgba(0,212,180,0.3);
+  overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: #00d4b4; font-weight: 700;
+}
+#logout-btn .logout-avatar img { width: 100%; height: 100%; object-fit: cover; }
+#logout-btn.visible { display: flex; }
 </style>
 </head>
 <body>
+
+<!-- ===================== LOGIN SCREEN ===================== -->
+<div id="auth-screen">
+  <div class="auth-grid"></div>
+  <div class="auth-corner tl"></div>
+  <div class="auth-corner tr"></div>
+  <div class="auth-corner bl"></div>
+  <div class="auth-corner br"></div>
+  <div class="auth-card">
+    <div class="auth-logo">ARKOS</div>
+    <div class="auth-title">Editor <span>Privado</span></div>
+    <p class="auth-subtitle">Esta herramienta es de uso exclusivo del propietario del portfolio. Autentícate con tu cuenta de Google para continuar.</p>
+    <div class="auth-divider"></div>
+    <button class="btn-google" id="btnGoogleLogin">
+      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+        <path d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 7.294C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      Continuar con Google
+    </button>
+    <p class="auth-footer">Acceso restringido · Solo usuarios autorizados</p>
+  </div>
+</div>
+
+<!-- ===================== DENIED SCREEN ===================== -->
+<div id="denied-screen">
+  <div class="auth-grid"></div>
+  <div class="auth-corner tl"></div>
+  <div class="auth-corner tr"></div>
+  <div class="auth-corner bl"></div>
+  <div class="auth-corner br"></div>
+  <div class="auth-card">
+    <div class="denied-icon">🔒</div>
+    <div class="denied-title">Acceso Denegado</div>
+    <p class="denied-subtitle">Tu cuenta no tiene permiso para acceder al editor. Si creés que es un error, contactá al propietario del portfolio.</p>
+    <div class="denied-email" id="denied-email-display">—</div>
+    <button class="btn-logout-denied" id="btnDeniedLogout">
+      ← Salir con otra cuenta
+    </button>
+    <p class="auth-footer">Acceso restringido · Solo usuarios autorizados</p>
+  </div>
+</div>
+
+<!-- ===================== LOGOUT FLOATING BUTTON ===================== -->
+<button id="logout-btn" title="Cerrar sesión">
+  <div class="logout-avatar" id="logoutAvatar">?</div>
+  <span id="logoutLabel">Cerrar sesión</span>
+</button>
 
 <!-- EDIT MODE BADGE -->
 <div id="edit-badge">Modo Edición</div>
@@ -870,5 +1099,146 @@ document.querySelectorAll('.editable').forEach(el => {
   });
 });
 </script>
-</body>
+
+<!-- ===================== SUPABASE AUTH ===================== -->
+<script>
+(function () {
+  /* ─────────────── CONFIGURACIÓN ─────────────── */
+  const SUPABASE_URL      = 'https://hhhbbprueunjjroviuve.supabase.co';       // ← Reemplazar
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhoaGJicHJ1ZXVuampyb3ZpdXZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExMDA3MDYsImV4cCI6MjA5NjY3NjcwNn0.JehrjKrxd7aakNCZV_NY6Dyr-j9iJVJ57YG0wnTiddQ';  // ← Reemplazar
+  const ALLOWED_EMAILS    = [
+    'erickemmanueldorado@gmail.com'                             // ← Reemplazar con tu email
+  ];
+
+  /* ─────────────── CLIENTE SUPABASE ─────────────── */
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  /* ─────────────── ELEMENTOS DOM ─────────────── */
+  const authScreen    = document.getElementById('auth-screen');
+  const deniedScreen  = document.getElementById('denied-screen');
+  const logoutBtn     = document.getElementById('logout-btn');
+  const logoutAvatar  = document.getElementById('logoutAvatar');
+  const logoutLabel   = document.getElementById('logoutLabel');
+  const deniedEmail   = document.getElementById('denied-email-display');
+  const pageWrap      = document.querySelector('.page-wrap');
+  const editBadge     = document.getElementById('edit-badge');
+  const arkosLoader   = document.getElementById('arkos-loader');
+
+  /* ─────────────── HELPERS ─────────────── */
+  function hideAll() {
+    authScreen.style.display   = 'none';
+    deniedScreen.style.display = 'none';
+  }
+
+  function showLogin() {
+    hideAll();
+    // Detener el loader de ArkOS si estaba corriendo
+    if (arkosLoader && !arkosLoader.classList.contains('done')) {
+      arkosLoader.classList.add('done');
+      setTimeout(() => arkosLoader && arkosLoader.remove(), 650);
+    }
+    authScreen.style.display = 'flex';
+    if (pageWrap)  pageWrap.style.visibility   = 'hidden';
+    if (editBadge) editBadge.style.display      = 'none';
+    logoutBtn.classList.remove('visible');
+  }
+
+  function showDenied(email) {
+    hideAll();
+    if (arkosLoader && !arkosLoader.classList.contains('done')) {
+      arkosLoader.classList.add('done');
+      setTimeout(() => arkosLoader && arkosLoader.remove(), 650);
+    }
+    deniedEmail.textContent    = email || '—';
+    deniedScreen.style.display = 'flex';
+    if (pageWrap)  pageWrap.style.visibility   = 'hidden';
+    if (editBadge) editBadge.style.display      = 'none';
+    logoutBtn.classList.remove('visible');
+  }
+
+  function showEditor(user) {
+    hideAll();
+    if (pageWrap)  pageWrap.style.visibility   = 'visible';
+    if (editBadge) editBadge.style.display      = '';
+
+    // Configurar botón de logout
+    const name  = user.user_metadata?.full_name || user.email || '';
+    const photo = user.user_metadata?.avatar_url || '';
+    if (photo) {
+      logoutAvatar.innerHTML = `<img src="${photo}" alt="avatar">`;
+    } else {
+      logoutAvatar.textContent = name.charAt(0).toUpperCase() || '?';
+    }
+    logoutLabel.textContent = 'Cerrar sesión';
+    logoutBtn.classList.add('visible');
+  }
+
+  /* ─────────────── AUTH GUARD ─────────────── */
+  function guard(session) {
+    if (!session) {
+      showLogin();
+      return;
+    }
+    const email = session.user?.email?.toLowerCase() || '';
+    const allowed = ALLOWED_EMAILS.map(e => e.toLowerCase());
+    if (allowed.includes(email)) {
+      showEditor(session.user);
+    } else {
+      showDenied(email);
+    }
+  }
+
+  /* ─────────────── INICIALIZACIÓN ─────────────── */
+  // Ocultar contenido hasta verificar sesión
+  if (pageWrap)  pageWrap.style.visibility = 'hidden';
+  if (editBadge) editBadge.style.display   = 'none';
+
+  // Verificar sesión activa al cargar
+  sb.auth.getSession().then(({ data: { session } }) => {
+    guard(session);
+  });
+
+  // Escuchar cambios de sesión (OAuth callback, logout, etc.)
+  sb.auth.onAuthStateChange((_event, session) => {
+    guard(session);
+  });
+
+  /* ─────────────── LOGIN CON GOOGLE ─────────────── */
+  document.getElementById('btnGoogleLogin').addEventListener('click', async () => {
+    const btn = document.getElementById('btnGoogleLogin');
+    btn.classList.add('loading');
+    btn.textContent = 'Redirigiendo…';
+
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.href
+      }
+    });
+
+    if (error) {
+      btn.classList.remove('loading');
+      btn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+          <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
+          <path d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z" fill="#FBBC05"/>
+          <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 7.294C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+        </svg>
+        Continuar con Google`;
+      console.error('OAuth error:', error.message);
+    }
+  });
+
+  /* ─────────────── LOGOUT ─────────────── */
+  async function doLogout() {
+    await sb.auth.signOut();
+    // guard() se disparará por onAuthStateChange → showLogin()
+  }
+  logoutBtn.addEventListener('click', doLogout);
+  document.getElementById('btnDeniedLogout').addEventListener('click', doLogout);
+
+})();
+</script></body>
 </html>
